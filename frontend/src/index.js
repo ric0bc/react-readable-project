@@ -8,7 +8,7 @@ import thunk from 'redux-thunk'
 import './index.css';
 import App from './App';
 import registerServiceWorker from './registerServiceWorker';
-import reducer from './category/reducer'
+import reducer from './category-list/reducer'
 
 const store = createStore(reducer, applyMiddleware(thunk))
 
