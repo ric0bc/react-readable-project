@@ -10,10 +10,9 @@ export function getCategories (categories) {
 }
 
 export function fetchAllCategories() {
-   return dispatch => (
+  return dispatch => (
     CategoriesAPI
       .fetchCategories()
       .then(categories => dispatch(getCategories(categories)))
-      //.then(categories => console.log('categories', categories))
   )
 }

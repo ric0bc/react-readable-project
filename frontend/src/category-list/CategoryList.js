@@ -1,10 +1,11 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
+import { Link } from 'react-router-dom'
 
 import { fetchAllCategories } from './actions'
 
 
-class Category extends Component {
+class CategoryList extends Component {
   componentDidMount(){
     this.props.fetchCategories()
   }
@@ -14,12 +15,11 @@ class Category extends Component {
       <div>
         <ol>
           {this.props.categories.map(category => (
-            //TODO: Add Key property to <a>
-            <a href={category.path}>
+            <Link key={category.id} to={'/category/' + category.path}>
               <li>
                 {category.name}
               </li>
-            </a>
+            </Link>
           ))}
         </ol>
       </div>
@@ -27,14 +27,8 @@ class Category extends Component {
   }
 }
 
-function mapStateToProps (categories) {
-  return categories
-}
+const mapStateToProps = (categories)  => categories
 
-function mapDispatchToProps (dispatch) {
-  return {
-    fetchCategories: () => dispatch(fetchAllCategories())
-  }
-}
+const  mapDispatchToProps = (dispatch) => ({fetchCategories: () => dispatch(fetchAllCategories())})
 
-export default connect(mapStateToProps, mapDispatchToProps)(Category)
+export default connect(mapStateToProps, mapDispatchToProps)(CategoryList)
