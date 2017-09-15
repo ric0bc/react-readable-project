@@ -1,9 +1,13 @@
 import React, { Component } from 'react'
 
+import Header from '../header/header'
+
 class CategoryView extends Component {
   render() {
     return (
-      <div>Test</div>
+      <div>
+        <Header />
+      </div>
     )
   }
 }
