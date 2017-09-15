@@ -7,7 +7,10 @@ const initialCategoryState = {
 function category  (state = initialCategoryState, action)  {
   switch (action.type) {
     case GET_CATEGORIES :
-      return {...action.categories}
+      return {
+        ...state,
+        categories: action.categories
+      }
     default :
       return state
   }

@@ -1,4 +1,4 @@
-import * as CategoriesAPI from '../utils/CategoriesAPI'
+import * as BackendAPI from '../utils/BackendAPI'
 
 export const GET_CATEGORIES = 'GET_CATEGORIES'
 
@@ -11,8 +11,8 @@ export function getCategories (categories) {
 
 export function fetchAllCategories() {
   return dispatch => (
-    CategoriesAPI
+    BackendAPI
       .fetchCategories()
-      .then(categories => dispatch(getCategories(categories)))
+      .then(results => dispatch(getCategories(results.categories)))
   )
 }

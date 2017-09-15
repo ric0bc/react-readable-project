@@ -12,8 +12,8 @@ class App extends Component {
         <Route exact path="/" render={() => (
           <Header />
         )} />
-        <Route path="/category/:category" render={() => (
-          <CategoryView />
+        <Route path="/category/:category" render={(props) => (
+            <CategoryView {...props} />
         )} />
       </div>
     );

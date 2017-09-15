@@ -14,7 +14,7 @@ class CategoryList extends Component {
     return (
       <div>
         <ol>
-          {this.props.categories.map(category => (
+          {this.props.category.categories.map(category => (
             <Link key={category.id} to={`/category/${category.path}`}>
               <li>
                 {category.name}
@@ -27,7 +27,7 @@ class CategoryList extends Component {
   }
 }
 
-const mapStateToProps = (categories)  => categories
+const mapStateToProps = ({ posts, category })  => ({category})
 
 const  mapDispatchToProps = (dispatch) => ({fetchCategories: () => dispatch(fetchAllCategories())})
 
