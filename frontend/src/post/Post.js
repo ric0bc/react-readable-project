@@ -8,6 +8,12 @@ class Post extends Component {
     this.props.fetchCategoryPosts(this.props.category)
   }
 
+  componentWillReceiveProps(prevProps) {
+    if(prevProps.category !== this.props.category){
+      this.props.fetchCategoryPosts(this.props.category)
+    }
+  }
+
   render() {
     console.log(this.props)
     return (
