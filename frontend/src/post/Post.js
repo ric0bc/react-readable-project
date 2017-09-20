@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
+import { Link } from 'react-router-dom'
 
 import {
   fetchAsnycCategoryPosts,
@@ -24,16 +25,17 @@ class Post extends Component {
 
   render() {
     return (
-      <div className="post-items">
+      <ol className="post-items">
       {this.props.posts.posts.map(post => (
-        <div className="post-item" key={post.id}>
-          <h3>{post.title}</h3>
+        <li className="post-item" key={post.id}>
+          <Link to={`/post/${post.id}`}><h3>{post.title}</h3></Link>
           <p>{post.body}</p>
           <p>author: {post.author}</p>
           <div>{post.voteScore}</div>
-        </div>
+          <Link to={`/edit/${post.id}`}>Edit</Link>
+        </li>
       ))}
-      </div>
+      </ol>
     )
   }
 }
