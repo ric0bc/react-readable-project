@@ -17,3 +17,14 @@ export function fetchAllPosts () {
   })
   .then(res => res.json())
 }
+export function addPost (post) {
+  return fetch(`${url}posts`, {
+    method: 'POST',
+    headers: {
+      'Authorization': authorization,
+      'Accept': 'application/json',
+      'Content-Type': 'application/json'
+    },
+    body: post
+  }).then(data => console.log(data))
+}
