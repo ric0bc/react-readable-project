@@ -28,7 +28,9 @@ class Post extends Component {
       <ol className="post-items">
       {this.props.posts.posts.map(post => (
         <li className="post-item" key={post.id}>
-          <Link to={`/post/${post.id}`}><h3>{post.title}</h3></Link>
+          <Link to={`/post/${post.id}`}>
+            <h3>{post.title}</h3>
+          </Link>
           <p>{post.body}</p>
           <p>author: {post.author}</p>
           <div>{post.voteScore}</div>

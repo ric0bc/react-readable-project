@@ -2,6 +2,7 @@ import * as BackendAPI from '../utils/BackendAPI'
 
 export const GET_CATEGORY_POSTS = 'GET_CATEGORY_POSTS'
 export const GET_ALL_POSTS = 'GET_ALL_POSTS'
+export const GET_POST = 'GET_POST'
 
 export function getCategoryPosts ({ categoryPosts }) {
   return {
@@ -30,5 +31,20 @@ export function fetchAsnycAllPosts() {
     BackendAPI
       .fetchAllPosts()
       .then(posts => dispatch(getAllPosts({posts})))
+  )
+}
+
+export function getPost (post) {
+  return {
+    type: GET_POST,
+    post
+  }
+}
+
+export function fetchAsnycPost(postId) {
+  return dispatch => (
+    BackendAPI
+      .fetchPost(postId)
+      .then(post => dispatch(getPost(post)))
   )
 }
