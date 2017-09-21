@@ -3,6 +3,7 @@ import { connect } from 'react-redux'
 
 import { fetchAsyncPost } from '../action'
 import Header from '../../header/header'
+import Comment from '../../comments/Comment'
 
 class PostDetail extends Component {
   componentDidMount() {
@@ -10,12 +11,15 @@ class PostDetail extends Component {
   }
 
   render() {
+    const { posts } = this.props
+
     return (
       <div>
         <Header />
         <div>
-          <h3>{this.props.posts.detailPost.title}</h3>
+          <h3>{posts.detailPost.title}</h3>
         </div>
+        <Comment />
       </div>
     )
   }

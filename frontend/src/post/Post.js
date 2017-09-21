@@ -42,7 +42,7 @@ class Post extends Component {
   }
 }
 
-const mapStateToProps = ({ posts, category }) => ({posts})
+const mapStateToProps = state => ({posts: state.posts})
 
 const mapDispatchToProps = (dispatch) => ({
   fetchCategoryPosts: (category) => dispatch(fetchAsyncCategoryPosts(category)),

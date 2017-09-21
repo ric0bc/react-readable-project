@@ -20,7 +20,7 @@ export function fetchAllPosts () {
   .then(res => res.json())
 }
 
-export function fetchPost(postId) {
+export function fetchPost (postId) {
   return fetch(
     `${url}posts/${postId}`, {
       headers: { 'Authorization': authorization }
@@ -50,4 +50,11 @@ export function editPost (post, postId) {
     },
     body: post
   })
+}
+
+export function getComments (id) {
+  return fetch(`${url}posts/${id}/comments`, {
+    headers: { 'Authorization': authorization }
+  })
+    .then(res => res.json())
 }
