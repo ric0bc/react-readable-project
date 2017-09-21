@@ -3,8 +3,8 @@ import { connect } from 'react-redux'
 import { Link } from 'react-router-dom'
 
 import {
-  fetchAsnycCategoryPosts,
-  fetchAsnycAllPosts
+  fetchAsyncCategoryPosts,
+  fetchAsyncAllPosts
 } from './action'
 import './post.css'
 
@@ -45,8 +45,8 @@ class Post extends Component {
 const mapStateToProps = ({ posts, category }) => ({posts})
 
 const mapDispatchToProps = (dispatch) => ({
-  fetchCategoryPosts: (category) => dispatch(fetchAsnycCategoryPosts(category)),
-  fetchAllPosts: () => dispatch(fetchAsnycAllPosts())
+  fetchCategoryPosts: (category) => dispatch(fetchAsyncCategoryPosts(category)),
+  fetchAllPosts: () => dispatch(fetchAsyncAllPosts())
 })
 
  export default connect(mapStateToProps, mapDispatchToProps)(Post)

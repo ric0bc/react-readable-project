@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 
-import { fetchAsnycPost } from '../action'
+import { fetchAsyncPost } from '../action'
 import Header from '../../header/header'
 
 class PostDetail extends Component {
@@ -10,7 +10,6 @@ class PostDetail extends Component {
   }
 
   render() {
-    console.log(this.props);
     return (
       <div>
         <Header />
@@ -25,7 +24,7 @@ class PostDetail extends Component {
 const mapStateToProps = state => state
 
 const mapDispatchToProps = (dispatch) => ({
-  fetchPost: (postId) => dispatch(fetchAsnycPost(postId))
+  fetchPost: (postId) => dispatch(fetchAsyncPost(postId))
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(PostDetail)

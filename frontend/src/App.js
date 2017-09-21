@@ -5,8 +5,7 @@ import './App.css';
 import Header from './header/header'
 import CategoryView from './category-view/CategoryView'
 import Post from './post/Post'
-import EditPost from './post/edit-post/EditPost'
-import CreatePost from './post/create-post/CreatePost'
+import CreateEditPost from './post/create-edit-post/CreateEditPost'
 import DetailPost from './post/post-detail/PostDetail'
 
 class App extends Component {
@@ -27,8 +26,8 @@ class App extends Component {
         <Route path="/category/:category" render={(props) => (
             <CategoryView {...props} />
         )} />
-        <Route path="/edit/:post" component={EditPost} />
-        <Route path="/create" component={CreatePost} />
+        <Route path="/edit/:post" component={CreateEditPost} />
+        <Route path="/create" component={CreateEditPost} />
         <Route path="/post/:post" component={DetailPost} />
       </div>
     );

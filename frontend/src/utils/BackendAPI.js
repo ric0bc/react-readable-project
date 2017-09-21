@@ -37,5 +37,5 @@ export function addPost (post) {
       'Content-Type': 'application/json'
     },
     body: post
-  }).then(data => console.log(data))
+  })
 }
