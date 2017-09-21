@@ -32,10 +32,9 @@ class CreateEditPost extends Component {
     const stringifyValues = JSON.stringify(values)
 
     if(this.props.match.params.post){
-      console.log('test')
+      BackendAPI.editPost(stringifyValues, values.id)
     } else {
-      BackendAPI.addPost(stringifyValues).then(() => {
-      })
+      BackendAPI.addPost(stringifyValues)
     }
     this.props.history.push('/')
   }
@@ -43,6 +42,7 @@ class CreateEditPost extends Component {
   render() {
     const {
       posts,
+      match,
       onChangeId,
       onChangeTimestamp,
       onChangeTitle,
@@ -50,6 +50,9 @@ class CreateEditPost extends Component {
       onChangeAuthor,
       onChangeCategory
     } = this.props
+
+    const disabled = match.params.post ? 'disabled' : ''
+    const readOnly = match.params.post ? 'readOnly' : ''
 
     return (
       <div>
@@ -60,12 +63,14 @@ class CreateEditPost extends Component {
               name="id"
               type="hidden"
               value={ posts.detailPost.id || Date.now() }
+              readOnly={readOnly}
               onChange={(e) => onChangeId(e.target.value)}
              />
             <input
               name="timestamp"
               type="hidden"
               value={ posts.detailPost.timestamp || Date.now()}
+              disabled={disabled}
               onChange={(e) => onChangeTimestamp(e.target.value)}
             />
             <label>
@@ -92,12 +97,14 @@ class CreateEditPost extends Component {
                 name="author"
                 type="text"
                 value={ posts.detailPost.author || '' }
+                disabled={disabled}
                 onChange={(e) => onChangeAuthor(e.target.value)}
               />
             </label>
             <select
               name="category"
               value={ posts.detailPost.category || '' }
+              disabled={disabled}
               onChange={(e) => onChangeCategory(e.target.value)}
             >
               <option value="..."></option>

@@ -39,3 +39,15 @@ export function addPost (post) {
     body: post
   })
 }
+
+export function editPost (post, postId) {
+  return fetch(`${url}posts/${postId}`, {
+    method: 'PUT',
+    headers: {
+      'Authorization': authorization,
+      'Accept': 'application/json',
+      'Content-Type': 'application/json'
+    },
+    body: post
+  })
+}
