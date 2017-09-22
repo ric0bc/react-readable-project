@@ -2,7 +2,6 @@ import React, { Component } from 'react'
 import serializeForm from 'form-serialize'
 import { connect } from 'react-redux'
 
-import Header from '../../header/header'
 import './createPost.css'
 import * as BackendAPI from '../../utils/BackendAPI'
 import {
@@ -56,7 +55,6 @@ class CreateEditPost extends Component {
 
     return (
       <div>
-        <Header />
         <div className="create-post-wrapper">
           <form className="create-form" onSubmit={this.handleSubmit}>
             <input

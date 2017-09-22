@@ -2,51 +2,33 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { Link } from 'react-router-dom'
 
-import {
-  fetchAsyncCategoryPosts,
-  fetchAsyncAllPosts
-} from './action'
 import './post.css'
 
 class Post extends Component {
-  componentDidMount () {
-    if (this.props.category === 'all'){
-      this.props.fetchAllPosts()
-    } else {
-      this.props.fetchCategoryPosts(this.props.category)
-    }
-  }
-
-  componentWillReceiveProps(prevProps) {
-    if(prevProps.category !== this.props.category){
-      this.props.fetchCategoryPosts(prevProps.category)
-    }
-  }
 
   render() {
+    const { post } = this.props
+
     return (
-      <ol className="post-items">
-      {this.props.posts.posts.map(post => (
-        <li className="post-item" key={post.id}>
-          <Link to={`/post/${post.id}`}>
-            <h3>{post.title}</h3>
-          </Link>
-          <p>{post.body}</p>
-          <p>author: {post.author}</p>
-          <div>{post.voteScore}</div>
-          <Link to={`/edit/${post.id}`}>Edit</Link>
-        </li>
-      ))}
-      </ol>
+      <li className="post-item" key={post.id}>
+        <Link to={`/post/${post.id}`}>
+          <h3>{post.title}</h3>
+        </Link>
+        <p>{post.body}</p>
+        <p>author: {post.author}</p>
+        <div>{post.voteScore}</div>
+        <Link to={`/edit/${post.id}`}>Edit</Link>
+      </li>
     )
   }
 }
 
-const mapStateToProps = state => ({posts: state.posts})
+// const mapStateToProps = state => ({posts: state.posts})
+//
+// const mapDispatchToProps = (dispatch) => ({
+//   fetchCategoryPosts: (category) => dispatch(fetchAsyncCategoryPosts(category)),
+//   fetchAllPosts: () => dispatch(fetchAsyncAllPosts())
+//     .then( data => fetchCommentsToPosts(data.posts))
+// })
 
-const mapDispatchToProps = (dispatch) => ({
-  fetchCategoryPosts: (category) => dispatch(fetchAsyncCategoryPosts(category)),
-  fetchAllPosts: () => dispatch(fetchAsyncAllPosts())
-})
-
- export default connect(mapStateToProps, mapDispatchToProps)(Post)
+ export default Post//connect(mapStateToProps, mapDispatchToProps)(Post)

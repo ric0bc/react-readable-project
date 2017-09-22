@@ -1,31 +1,39 @@
 import React, { Component } from 'react';
-import { Route, Link } from 'react-router-dom';
+import { connect } from 'react-redux'
+import { Route, withRouter } from 'react-router-dom';
+import { PropTypes } from 'prop-types'
 
 import './App.css';
+import Home from './Home'
 import Header from './header/header'
 import CategoryView from './category-view/CategoryView'
-import Post from './post/Post'
 import CreateEditPost from './post/create-edit-post/CreateEditPost'
 import DetailPost from './post/post-detail/PostDetail'
+import { fetchAsyncAllPosts } from './post/action'
 
 class App extends Component {
+  static propTypes = {
+    posts: PropTypes.array.isRequired,
+    getAllPosts: PropTypes.func.isRequired
+  }
+
+  componentDidMount() {
+    this.props.getAllPosts()
+  }
+
   render() {
+    const { posts } = this.props
+
     return (
       <div className="App">
-        <Route exact path="/" render={() => (
-          <div>
-            <Header />
-            <Post category="all" />
-            <Link to="/create">
-              <div className="app-create-link">
-                +
-              </div>
-            </Link>
-          </div>
-        )} />
-        <Route path="/category/:category" render={(props) => (
-            <CategoryView {...props} />
-        )} />
+      <Header />
+        <Route
+          exact
+          path="/"
+          render={() => <Home posts={posts} /> } />
+        <Route
+          path="/category/:category"
+          render={(props) => <CategoryView {...props} posts={posts} /> } />
         <Route path="/edit/:post" component={CreateEditPost} />
         <Route path="/create" component={CreateEditPost} />
         <Route path="/post/:post" component={DetailPost} />
@@ -34,4 +42,11 @@ class App extends Component {
   }
 }
 
-export default App;
+const mapStateToProps = state => ({
+  posts: state.posts.allPosts
+})
+const mapDispatchToProps = (dispatch) => ({
+  getAllPosts: () => dispatch(fetchAsyncAllPosts())
+})
+
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(App))

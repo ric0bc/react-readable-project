@@ -12,7 +12,8 @@ import {
 } from './action'
 
 const initialCategoryState = {
-  posts: [],
+  allPosts: [],
+  categoryPosts: [],
   detailPost: {}
 }
 
@@ -21,12 +22,12 @@ function posts  (state = initialCategoryState, action)  {
     case GET_CATEGORY_POSTS :
       return {
         ...state,
-          posts: action.categoryPosts
+          categoryPosts: action.categoryPosts
       }
     case GET_ALL_POSTS :
       return {
         ...state,
-          posts: action.posts
+          allPosts: action.posts
       }
     case GET_POST :
       return {

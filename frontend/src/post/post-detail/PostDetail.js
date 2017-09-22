@@ -2,7 +2,6 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux'
 
 import { fetchAsyncPost } from '../action'
-import Header from '../../header/header'
 import Comment from '../../comments/Comment'
 
 class PostDetail extends Component {
@@ -15,7 +14,6 @@ class PostDetail extends Component {
 
     return (
       <div>
-        <Header />
         <div>
           <h3>{posts.detailPost.title}</h3>
         </div>
