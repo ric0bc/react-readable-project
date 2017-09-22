@@ -1,5 +1,4 @@
 import {
-  GET_CATEGORY_POSTS,
   GET_ALL_POSTS,
   GET_POST,
   CHANGE_TITLE,
@@ -13,17 +12,11 @@ import {
 
 const initialCategoryState = {
   allPosts: [],
-  categoryPosts: [],
   detailPost: {}
 }
 
 function posts  (state = initialCategoryState, action)  {
   switch (action.type) {
-    case GET_CATEGORY_POSTS :
-      return {
-        ...state,
-          categoryPosts: action.categoryPosts
-      }
     case GET_ALL_POSTS :
       return {
         ...state,

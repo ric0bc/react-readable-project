@@ -6,7 +6,7 @@ import { PropTypes } from 'prop-types'
 import './App.css';
 import Home from './Home'
 import Header from './header/header'
-import CategoryView from './category-view/CategoryView'
+import CategoryPosts from './category-posts/CategoryPosts'
 import CreateEditPost from './post/create-edit-post/CreateEditPost'
 import DetailPost from './post/post-detail/PostDetail'
 import { fetchAsyncAllPosts } from './post/action'
@@ -33,7 +33,7 @@ class App extends Component {
           render={() => <Home posts={posts} /> } />
         <Route
           path="/category/:category"
-          render={(props) => <CategoryView {...props} posts={posts} /> } />
+          render={(props) => <CategoryPosts {...props} posts={posts} /> } />
         <Route path="/edit/:post" component={CreateEditPost} />
         <Route path="/create" component={CreateEditPost} />
         <Route path="/post/:post" component={DetailPost} />

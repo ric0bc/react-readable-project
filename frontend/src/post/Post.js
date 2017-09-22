@@ -1,10 +1,15 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { Link } from 'react-router-dom'
+import { PropTypes } from 'prop-types'
 
 import './post.css'
+import Comment from '../comments/Comment'
 
 class Post extends Component {
+  static propTypes = {
+    post: PropTypes.object.isRequired
+  }
 
   render() {
     const { post } = this.props
@@ -18,6 +23,7 @@ class Post extends Component {
         <p>author: {post.author}</p>
         <div>{post.voteScore}</div>
         <Link to={`/edit/${post.id}`}>Edit</Link>
+        <Comment postId={post.id} />
       </li>
     )
   }

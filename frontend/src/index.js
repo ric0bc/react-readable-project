@@ -11,11 +11,17 @@ import registerServiceWorker from './registerServiceWorker';
 import category from './category-list/reducer'
 import posts from './post/reducer'
 import comments from './comments/reducer'
+import categoryPosts from './category-posts/reducer'
 
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose
 
 const store = createStore(
-  combineReducers({ posts, category, comments }),
+  combineReducers({
+    posts,
+    category,
+    comments,
+    categoryPosts
+  }),
   composeEnhancers(applyMiddleware(thunk))
 )
 

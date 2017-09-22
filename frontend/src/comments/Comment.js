@@ -3,23 +3,28 @@ import { connect } from 'react-redux'
 
 import {
   fetchAsyncComments
-} from './action'
+} from './actions'
 
 class Comment extends Component {
   componentDidMount() {
-    console.log(this.props.fetchComments(this.props.posts.detailPost.id));
-    console.log('props', this.props);
+    this.props.fetchComments(this.props.postId)
   }
 
   render() {
-    // console.log(this.props);
+
+    let p = this.props.comments.parentIdComments.map(t => t[this.props.postId])
+
+    console.log(p);
+    console.log(this.props);
     return (
-      <div>Test</div>
+      <div>
+      {this.props.comments.comments.length}
+      </div>
     )
   }
 }
 
-const mapStateToProps = state => state
+const mapStateToProps = state => ({ comments: state.comments })
 
 const mapDispatchToProps = (disptach) => ({
   fetchComments: id => disptach(fetchAsyncComments(id))
