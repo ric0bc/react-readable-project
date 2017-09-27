@@ -2,29 +2,21 @@ import {
   GET_COMMENTS
 } from './actions'
 
-const initialCategoryState = {
-  comments: [],
-  parentIdComments: []
-}
+const initialCategoryState = {}
 
 function comments ( state = initialCategoryState, action ) {
   switch ( action.type ) {
     case GET_COMMENTS :
-      let t = [...state.parentIdComments]
-      const test = action.comments.reduce((comments, comment) => {
-        if (comment.parentId in comments) {
-          comments[comment.parentId]++
-        } else {
-          comments[comment.parentId] = 1
-        }
-        return comments
-      }, {})
-      t.push(test)
-      return {
-        ...state,
-        comments: action.comments,
-        parentIdComments: t
+      let init = {...state}
+
+      if(action.comments.length > 0) {
+        const parentID = action.comments[0].parentId
+        init[parentID] = action.comments
+      } else {
+        init[action.id] = []
       }
+      
+      return init
     default :
       return state
   }

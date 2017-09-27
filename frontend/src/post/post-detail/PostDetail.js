@@ -17,7 +17,7 @@ class PostDetail extends Component {
         <div>
           <h3>{posts.detailPost.title}</h3>
         </div>
-        <Comment />
+        <Comment postId={posts.detailPost.id} />
       </div>
     )
   }
