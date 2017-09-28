@@ -1,20 +1,25 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
+import { PropTypes } from 'prop-types'
 
 import { fetchAsyncComments } from './actions'
 import CommentsCount from './CommentsCount'
 
 class Comment extends Component {
+  static propTypes = {
+    postId: PropTypes.string.isRequired,
+    fetchComments: PropTypes.func.isRequired
+  }
+
   componentDidMount() {
     const { fetchComments, postId} = this.props
-
     fetchComments(postId)
   }
 
   render() {
     return (
       <div>
-        <CommentsCount postId={this.props.postId} comments={this.props.state.comments}/>
+        <CommentsCount postId={this.props.postId}/>
       </div>
     )
   }

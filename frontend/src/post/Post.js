@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom'
 import { PropTypes } from 'prop-types'
 
 import './post.css'
-import Comment from '../comments/Comment'
+import CommentsCount from '../comments/CommentsCount'
 
 class Post extends Component {
   static propTypes = {
@@ -23,7 +23,7 @@ class Post extends Component {
         <p>author: {post.author}</p>
         <div>{post.voteScore}</div>
         <Link to={`/edit/${post.id}`}>Edit</Link>
-        <Comment postId={post.id} />
+        <CommentsCount postId={post.id} />
       </li>
     )
   }
