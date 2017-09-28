@@ -14,13 +14,11 @@ class CommentsCount extends Component {
   componentDidMount() {
     const { fetchComments, postId, comments } = this.props
     if(Object.keys(comments).length <= 0) {
-      console.log('test');
       fetchComments(postId)
     }
   }
 
   render() {
-    console.log(this.props);
     const { state, postId } = this.props
     return (
       <div>

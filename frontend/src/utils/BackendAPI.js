@@ -58,3 +58,27 @@ export function getComments (id) {
   })
     .then(res => res.json())
 }
+
+export function addComment (comment) {
+  return fetch(`${url}comments`, {
+    method: 'POST',
+    headers: {
+      'Authorization': authorization,
+      'Accept': 'application/json',
+      'Content-Type': 'application/json'
+    },
+    body: comment
+  })
+}
+
+export function editComment (comment, id) {
+  return fetch(`${url}comments/${id}`, {
+    method: 'PUT',
+    headers: {
+      'Authorization': authorization,
+      'Accept': 'application/json',
+      'Content-Type': 'application/json'
+    },
+    body: comment
+  })
+}
