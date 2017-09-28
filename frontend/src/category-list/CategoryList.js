@@ -1,34 +1,23 @@
-import React, { Component } from 'react'
-import { connect } from 'react-redux'
+import React from 'react'
 import { Link } from 'react-router-dom'
+import PropTypes from 'prop-types'
 
-import { fetchAllCategories } from './actions'
+const CategoryList = (props) => (
+  <div>
+    <ol>
+      {props.categories.map(category => (
+        <Link key={category.id} to={`/category/${category.path}`}>
+          <li>
+            {category.name}
+          </li>
+        </Link>
+      ))}
+    </ol>
+  </div>
+)
 
-
-class CategoryList extends Component {
-  componentDidMount(){
-    this.props.fetchCategories()
-  }
-
-  render() {
-    return (
-      <div>
-        <ol>
-          {this.props.category.categories.map(category => (
-            <Link key={category.id} to={`/category/${category.path}`}>
-              <li>
-                {category.name}
-              </li>
-            </Link>
-          ))}
-        </ol>
-      </div>
-    )
-  }
+CategoryList.propTypes = {
+  categories: PropTypes.array.isRequired
 }
 
-const mapStateToProps = ({ posts, category })  => ({category})
-
-const  mapDispatchToProps = (dispatch) => ({fetchCategories: () => dispatch(fetchAllCategories())})
-
-export default connect(mapStateToProps, mapDispatchToProps)(CategoryList)
+export default CategoryList

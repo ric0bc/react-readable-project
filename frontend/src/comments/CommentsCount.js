@@ -6,28 +6,26 @@ import { fetchAsyncComments } from './actions'
 
 class CommentsCount extends Component {
   static propTypes = {
-    postId: PropTypes.string.isRequired,
+    postId: PropTypes.string,
+    comments: PropTypes.object,
     fetchComments: PropTypes.func.isRequired
   }
 
   componentDidMount() {
-    const { fetchComments, postId} = this.props
-    fetchComments(postId)
-  }
-
-  commentsLength () {
-    const { state, postId } = this.props
-
-    const parentIdComments = state.comments[postId]
-    if(parentIdComments){
-      const count = Object.keys(parentIdComments).length
-      return count
+    const { fetchComments, postId, comments } = this.props
+    if(Object.keys(comments).length <= 0) {
+      console.log('test');
+      fetchComments(postId)
     }
   }
 
   render() {
+    console.log(this.props);
+    const { state, postId } = this.props
     return (
-      <div>{this.commentsLength()}</div>
+      <div>
+        {state.comments[postId] instanceof Array && state.comments[postId].length}
+      </div>
     )
   }
 }

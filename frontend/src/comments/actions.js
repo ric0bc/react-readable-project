@@ -4,7 +4,6 @@ export const GET_COMMENTS = 'GET_COMMENTS'
 export const GET_COMMENTS_TO_POSTS = 'GET_COMMENTS_TO_POSTS'
 
 function getComments (comments, id) {
-  console.log('id', comments);
   return {
     type: GET_COMMENTS,
     comments,

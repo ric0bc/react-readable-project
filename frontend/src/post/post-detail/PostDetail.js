@@ -3,6 +3,7 @@ import { connect } from 'react-redux'
 
 import { fetchAsyncPost } from '../action'
 import Comment from '../../comments/Comment'
+import CommentsCount from '../../comments/CommentsCount'
 
 class PostDetail extends Component {
   componentDidMount() {
@@ -10,14 +11,19 @@ class PostDetail extends Component {
   }
 
   render() {
-    const { posts } = this.props
+    const { posts, comments, match } = this.props
 
     return (
       <div>
         <div>
           <h3>{posts.detailPost.title}</h3>
+          <CommentsCount
+            postId={match.params.post}
+            comments={comments} />
         </div>
-        <Comment postId={posts.detailPost.id} />
+          <Comment
+            postId={match.params.post}
+            comments={comments} />
       </div>
     )
   }

@@ -1,4 +1,5 @@
 import * as BackendAPI from '../utils/BackendAPI'
+import { fetchAsyncComments } from '../comments/actions'
 
 export const GET_ALL_POSTS = 'GET_ALL_POSTS'
 export const GET_POST = 'GET_POST'
@@ -37,6 +38,7 @@ export function fetchAsyncPost(postId) {
     BackendAPI
       .fetchPost(postId)
       .then(post => dispatch(getPost(post)))
+      .then(data => dispatch(fetchAsyncComments(data.post.id)))
   )
 }
 

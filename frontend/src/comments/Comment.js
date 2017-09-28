@@ -2,33 +2,27 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { PropTypes } from 'prop-types'
 
-import { fetchAsyncComments } from './actions'
 import CommentsCount from './CommentsCount'
 
 class Comment extends Component {
   static propTypes = {
     postId: PropTypes.string.isRequired,
-    fetchComments: PropTypes.func.isRequired
-  }
-
-  componentDidMount() {
-    const { fetchComments, postId} = this.props
-    fetchComments(postId)
+    comments: PropTypes.object.isRequired
   }
 
   render() {
+    const { comments, postId } = this.props
+
     return (
       <div>
-        <CommentsCount postId={this.props.postId}/>
+        {comments[postId] instanceof Array && comments[postId].map(comment => (
+          <div key={comment.id}>
+            <p>{comment.body}</p>
+          </div>
+        ))}
       </div>
     )
   }
 }
 
-const mapStateToProps = state => ({ state })
-
-const mapDispatchToProps = (disptach) => ({
-  fetchComments: id => disptach(fetchAsyncComments(id))
-})
-
-export default connect(mapStateToProps, mapDispatchToProps)(Comment)
+export default Comment

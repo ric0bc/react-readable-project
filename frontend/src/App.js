@@ -10,23 +10,27 @@ import CategoryPosts from './category-posts/CategoryPosts'
 import CreateEditPost from './post/create-edit-post/CreateEditPost'
 import DetailPost from './post/post-detail/PostDetail'
 import { fetchAsyncAllPosts } from './post/action'
+import { fetchAllCategories } from './category-list/actions'
 
 class App extends Component {
   static propTypes = {
     posts: PropTypes.array.isRequired,
-    getAllPosts: PropTypes.func.isRequired
+    getAllPosts: PropTypes.func.isRequired,
+    categories: PropTypes.array.isRequired,
+    getAllCategories: PropTypes.func.isRequired
   }
 
   componentDidMount() {
     this.props.getAllPosts()
+    this.props.getAllCategories()
   }
 
   render() {
-    const { posts } = this.props
+    const { posts, categories } = this.props
 
     return (
       <div className="App">
-      <Header />
+      <Header categories={categories} />
         <Route
           exact
           path="/"
@@ -43,10 +47,12 @@ class App extends Component {
 }
 
 const mapStateToProps = state => ({
-  posts: state.posts.allPosts
+  posts: state.posts.allPosts,
+  categories: state.category.categories
 })
 const mapDispatchToProps = (dispatch) => ({
-  getAllPosts: () => dispatch(fetchAsyncAllPosts())
+  getAllPosts: () => dispatch(fetchAsyncAllPosts()),
+  getAllCategories: () => dispatch(fetchAllCategories())
 })
 
 export default withRouter(connect(mapStateToProps, mapDispatchToProps)(App))
