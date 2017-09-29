@@ -5,7 +5,11 @@ import { PropTypes } from 'prop-types'
 
 import * as BackendAPI from '../utils/BackendAPI'
 import CommentsCount from './CommentsCount'
-import { toggleEditMode } from './actions'
+import {
+  toggleEditMode,
+  fetchUpdateComment,
+  fetchAddComment
+} from './actions'
 
 class Comment extends Component {
   state = {
@@ -13,7 +17,9 @@ class Comment extends Component {
   }
   static propTypes = {
     postId: PropTypes.string.isRequired,
-    comments: PropTypes.object.isRequired
+    comments: PropTypes.object.isRequired,
+    onAddComment: PropTypes.func.isRequired,
+    onEditComment: PropTypes.func.isRequired
   }
 
   handleSubmit = (event) => {
@@ -22,27 +28,30 @@ class Comment extends Component {
     const stringifyValues = JSON.stringify(values)
 
     if(values.parentId) {
-      BackendAPI.addComment(stringifyValues)
+      this.props.onAddComment(stringifyValues)
     } else {
-      BackendAPI.editComment(stringifyValues, values.id)
+      this.props.onEditComment(stringifyValues, values.id)
       this.handleEditMode(values.id)
+      this.setState({ inputBody: '' })
     }
   }
 
-  handleEditMode = (id) => {
+  handleEditMode = id => {
     this.props.toggleEdit(id)
   }
 
-  render() {
-    const { comments, postId } = this.props
+  handleInputChange = event => {
+    this.setState({ inputBody: event.target.value })
+  }
 
-    console.log(this.props)
+  render() {
+    const { comments, postId, toggleEdit } = this.props
 
     return (
       <div>
         {comments[postId] instanceof Array && comments[postId].map(comment => (
           <div key={comment.id}>
-            {this.props.comments.editMode[comment.id] ? (
+            {comments.editMode[comment.id] ? (
               <div>
                 <form onSubmit={this.handleSubmit}>
                   <input name="id" type="hidden" value={comment.id} />
@@ -51,7 +60,7 @@ class Comment extends Component {
                     name="body"
                     type="text"
                     value={ this.state.inputBody || comment.body}
-                    onChange={(e) => this.setState({ inputBody: e.target.value})} />
+                    onChange={this.handleInputChange} />
                   <br/>
                   <input
                     type="submit"
@@ -62,7 +71,7 @@ class Comment extends Component {
               <div>
                 <span><p>{comment.body}</p></span>
                 <button
-                  onClick={() => this.handleEditMode(comment.id)}>
+                  onClick={() => toggleEdit(comment.id)}>
                     Edit
                 </button>
               </div>
@@ -90,7 +99,9 @@ class Comment extends Component {
 
 const mapStateToProps = state => state
 const mapDispatchToProps = dispatch => ({
-  toggleEdit: (id) => dispatch(toggleEditMode(id))
+  toggleEdit: (id) => dispatch(toggleEditMode(id)),
+  onEditComment: (comment, id) => dispatch(fetchUpdateComment(comment, id)),
+  onAddComment: (comment) => dispatch(fetchAddComment(comment))
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(Comment)

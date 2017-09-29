@@ -71,7 +71,7 @@ export function addComment (comment) {
   })
 }
 
-export function editComment (comment, id) {
+export function updateComment (comment, id) {
   return fetch(`${url}comments/${id}`, {
     method: 'PUT',
     headers: {

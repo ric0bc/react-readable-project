@@ -1,6 +1,8 @@
 import {
   GET_COMMENTS,
-  TOGGLE_EDIT_MODE
+  TOGGLE_EDIT_MODE,
+  UPDATE_COMMENT,
+  ADD_COMMENT
 } from './actions'
 
 const initialCategoryState = {
@@ -29,6 +31,23 @@ function comments ( state = initialCategoryState, action ) {
         }
       }
 
+    case ADD_COMMENT :
+      return {
+        ...state,
+        [action.comment.parentId]: [
+          ...state[action.comment.parentId],
+          action.comment
+        ]
+      }
+
+    case UPDATE_COMMENT :
+      let updateComments = [...state[action.comment.parentId]]
+      const index = updateComments.findIndex(i => i.id === action.comment.id)
+      updateComments.splice(index, 1, action.comment)
+      return {
+        ...state,
+        [action.comment.parentId]: updateComments
+      }
     default :
       return state
   }
