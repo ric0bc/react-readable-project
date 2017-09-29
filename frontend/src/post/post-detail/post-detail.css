@@ -1,0 +1,13 @@
+.detail-post-body {
+  text-align: center;
+  border-bottom: 1px solid #EEE;
+}
+
+.detail-post-title {
+  margin: 0;
+  padding-top: 20px;
+}
+
+.detail-post-comment {
+  padding: 0 5% 5% 5%;
+}

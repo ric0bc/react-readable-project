@@ -30,7 +30,7 @@ class CategoryPosts extends Component {
     const { posts, match } = this.props
 
     return (
-      <div>
+      <div className="posts">
         <ol className="post-items">
           {posts.map( post => (
             <Post

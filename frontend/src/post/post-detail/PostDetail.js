@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 
+import './post-detail.css'
 import { fetchAsyncPost } from '../action'
 import Comment from '../../comments/Comment'
 import CommentsCount from '../../comments/CommentsCount'
@@ -14,16 +15,21 @@ class PostDetail extends Component {
     const { posts, comments, match } = this.props
 
     return (
-      <div>
-        <div>
-          <h3>{posts.detailPost.title}</h3>
-          <CommentsCount
-            postId={match.params.post}
-            comments={comments} />
+      <div className="posts">
+        <div className="post">
+          <div className="detail-post-body">
+            <h1 className="detail-post-title">{posts.detailPost.title}</h1>
+            <p>{posts.detailPost.body}</p>
+            <CommentsCount
+              postId={match.params.post}
+              comments={comments} />
+          </div>
+          <div className="detail-post-comment">
+            <Comment
+              postId={match.params.post}
+              comments={comments} />
+          </div>
         </div>
-          <Comment
-            postId={match.params.post}
-            comments={comments} />
       </div>
     )
   }

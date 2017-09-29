@@ -1,30 +1,20 @@
-import React, { Component } from 'react'
-import { Link } from 'react-router-dom'
+import React from 'react'
 import { PropTypes } from 'prop-types'
 
 import Post from './post/Post'
 
-class Home extends Component {
-  static propTypes = {
-    posts: PropTypes.array.isRequired
-  }
+const Home = (props) => (
+  <div className="posts">
+    <ol className="post-items">
+      {props.posts.map(post => (
+        <Post key={post.id} post={post} />
+      ))}
+    </ol>
+  </div>
+)
 
-  render() {
-    return (
-      <div>
-        <ol className="post-items">
-          {this.props.posts.map(post => (
-            <Post key={post.id} post={post} />
-          ))}
-        </ol>
-        <Link to="/create">
-          <div className="app-create-link">
-            +
-          </div>
-        </Link>
-      </div>
-    )
-  }
+Home.propTypes = {
+  posts: PropTypes.array.isRequired
 }
 
 export default Home

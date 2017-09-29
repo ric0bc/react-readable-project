@@ -1,25 +1,53 @@
-import React from 'react'
+import React, { Component } from 'react'
 import { Link } from 'react-router-dom'
 import { PropTypes } from 'prop-types'
 
 import './post.css'
 import CommentsCount from '../comments/CommentsCount'
 
-const Post = (props) =>  (
-  <li className="post-item" key={props.post.id}>
-    <Link to={`/post/${props.post.id}`}>
-      <h3>{props.post.title}</h3>
-    </Link>
-    <p>{props.post.body}</p>
-    <p>author: {props.post.author}</p>
-    <div>{props.post.voteScore}</div>
-    <Link to={`/edit/${props.post.id}`}>Edit</Link>
-    <CommentsCount postId={props.post.id} comments={{}}/>
-  </li>
-)
+class Post extends Component {
+  static propTypes = {
+    post: PropTypes.object.isRequired
+  }
 
-Post.propTypes = {
-  post: PropTypes.object.isRequired
+  handleTouchStart = () => {
+    console.log('test');
+  }
+
+  handleTouchEnd = () => {
+    console.log('end');
+  }
+
+  render() {
+    const { post } = this.props
+
+    return (
+      <li
+        className="post-item"
+        key={post.id}
+        onTouchStart={this.handleTouchStart}
+        onTouchEnd={this.handleTouchEnd}>
+        <div className="post-content">
+          <Link to={`/post/${post.id}`}>
+            <p className="post-title">{post.title}</p>
+          </Link>
+          <p className="post-body">{post.body}</p>
+          <div className="post-sub-details">
+            <p className="post-author">Author: {post.author}</p>
+            <div className="post-comments">
+              <p>Comments:</p>
+              <CommentsCount postId={post.id} comments={{}}/>
+            </div>
+            <p className="post-timestamp">{post.timestamp}</p>
+          </div>
+        </div>
+        <div className="post-details">
+          <div>Vote score: {post.voteScore}</div>
+          <Link to={`/edit/${post.id}`}>Edit</Link>
+        </div>
+      </li>
+    )
+  }
 }
 
  export default Post

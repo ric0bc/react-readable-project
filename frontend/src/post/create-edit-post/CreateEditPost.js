@@ -54,7 +54,7 @@ class CreateEditPost extends Component {
     const readOnly = match.params.post ? 'readOnly' : ''
 
     return (
-      <div>
+      <div className="posts">
         <div className="create-post-wrapper">
           <form className="create-form" onSubmit={this.handleSubmit}>
             <input

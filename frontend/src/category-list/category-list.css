@@ -1,0 +1,13 @@
+.head-title {
+  font-size: 2em;
+  font-weight: 300;
+  color: #FFF;
+}
+
+.category-list {
+  display: flex;
+  justify-content: ;
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+}

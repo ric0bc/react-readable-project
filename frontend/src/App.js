@@ -4,6 +4,7 @@ import { Route, withRouter } from 'react-router-dom';
 import { PropTypes } from 'prop-types'
 
 import './App.css';
+import Sidebar from './sidebar/Sidebar'
 import Home from './Home'
 import Header from './header/header'
 import CategoryPosts from './category-posts/CategoryPosts'
@@ -30,17 +31,18 @@ class App extends Component {
 
     return (
       <div className="App">
-      <Header categories={categories} />
-        <Route
-          exact
-          path="/"
-          render={() => <Home posts={posts} /> } />
-        <Route
-          path="/category/:category"
-          render={(props) => <CategoryPosts {...props} posts={posts} /> } />
-        <Route path="/edit/:post" component={CreateEditPost} />
-        <Route path="/create" component={CreateEditPost} />
-        <Route path="/post/:post" component={DetailPost} />
+        <Sidebar />
+        <div className="main-content">
+          <Header categories={categories} />
+            <Route
+              exact
+              path="/"
+              render={() => <Home posts={posts} /> } />
+            <Route path="/category/:category"  component={CategoryPosts} />
+            <Route path="/edit/:post" component={CreateEditPost} />
+            <Route path="/create" component={CreateEditPost} />
+            <Route path="/post/:post" component={DetailPost} />
+        </div>
       </div>
     );
   }
@@ -55,4 +57,11 @@ const mapDispatchToProps = (dispatch) => ({
   getAllCategories: () => dispatch(fetchAllCategories())
 })
 
-export default withRouter(connect(mapStateToProps, mapDispatchToProps)(App))
+export default withRouter(
+  connect(
+    mapStateToProps,
+    mapDispatchToProps,
+    null,
+    { pure: false }
+  )(App)
+)

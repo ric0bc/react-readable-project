@@ -3,8 +3,6 @@ import { connect } from 'react-redux'
 import serializeForm from 'form-serialize'
 import { PropTypes } from 'prop-types'
 
-import * as BackendAPI from '../utils/BackendAPI'
-import CommentsCount from './CommentsCount'
 import {
   toggleEditMode,
   fetchUpdateComment,
