@@ -3,6 +3,7 @@ import { connect } from 'react-redux'
 import serializeForm from 'form-serialize'
 import { PropTypes } from 'prop-types'
 
+import VotingComment from './voting-comment/VotingComment'
 import {
   toggleEditMode,
   fetchUpdateComment,
@@ -68,6 +69,7 @@ class Comment extends Component {
             ) : (
               <div>
                 <span><p>{comment.body}</p></span>
+                <VotingComment comment={comment} />
                 <button
                   onClick={() => toggleEdit(comment.id)}>
                     Edit

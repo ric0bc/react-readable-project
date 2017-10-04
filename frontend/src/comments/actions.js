@@ -5,6 +5,7 @@ export const GET_COMMENTS_TO_POSTS = 'GET_COMMENTS_TO_POSTS'
 export const TOGGLE_EDIT_MODE = 'TOGGLE_EDIT_MODE'
 export const UPDATE_COMMENT = 'UPDATE_COMMENT'
 export const ADD_COMMENT = 'ADD_COMMENT'
+export const VOTE_COMMENT = 'VOTE_COMMENT'
 
 function getComments (comments, id) {
   return {
@@ -54,8 +55,22 @@ export function fetchUpdateComment (comment, id) {
   return dispatch => {
     BackendAPI.updateComment(comment, id)
       .then(res => res.json())
-      //.then(data => console.log(data))
       .then(comment => dispatch(updateComment(comment)))
+  }
+}
+
+function voteComment (comment) {
+  return {
+    type: VOTE_COMMENT,
+    comment
+  }
+}
+
+export function fetchVotingComment (id, option) {
+  return dispatch => {
+    BackendAPI.commentVoting(id, option)
+      .then(res => res.json())
+      .then(comment => dispatch(voteComment(comment)))
   }
 }
 

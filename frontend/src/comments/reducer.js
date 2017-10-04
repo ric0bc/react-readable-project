@@ -2,7 +2,8 @@ import {
   GET_COMMENTS,
   TOGGLE_EDIT_MODE,
   UPDATE_COMMENT,
-  ADD_COMMENT
+  ADD_COMMENT,
+  VOTE_COMMENT
 } from './actions'
 
 const initialCategoryState = {
@@ -47,6 +48,19 @@ function comments ( state = initialCategoryState, action ) {
       return {
         ...state,
         [action.comment.parentId]: updateComments
+      }
+
+    case VOTE_COMMENT :
+      const newVotedComments = [...state[action.comment.parentId]]
+      newVotedComments.map(comment => {
+        if(comment.id === action.comment.id){
+          comment.voteScore = action.comment.voteScore
+        }
+        return comment
+      })
+      return {
+        ...state,
+        [action.comment.parentId]: newVotedComments
       }
     default :
       return state

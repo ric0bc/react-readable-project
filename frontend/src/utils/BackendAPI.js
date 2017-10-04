@@ -94,3 +94,15 @@ export function postVoting (id, option) {
     body: option
   })
 }
+
+export function commentVoting (id, option) {
+  return fetch(`${url}comments/${id}`, {
+    method: 'POST',
+    headers: {
+      'Authorization': authorization,
+      'Accept': 'application/json',
+      'Content-Type': 'application/json'
+    },
+    body: option
+  })
+}

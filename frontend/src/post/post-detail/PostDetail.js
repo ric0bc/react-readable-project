@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux'
 
 import './post-detail.css'
-import { fetchAsyncPost, fetchVotingPost } from '../action'
+import { fetchAsyncPost } from '../action'
 import Comment from '../../comments/Comment'
 import CommentsCount from '../../comments/CommentsCount'
 import VotingPost from '../voting-post/VotingPost'
