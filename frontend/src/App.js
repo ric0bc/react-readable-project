@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux'
 import { Route, withRouter } from 'react-router-dom';
 import { PropTypes } from 'prop-types'
+import { sortBy } from 'sort-by'
 
 import './App.css';
 import Sidebar from './sidebar/Sidebar'
@@ -34,13 +35,13 @@ class App extends Component {
         <Sidebar />
         <div className="main-content">
           <Header categories={categories} />
-            <Route
-              exact
-              path="/"
-              render={() => <Home posts={posts} /> } />
+          <Route
+            exact
+            path="/"
+            render={() => <Home posts={posts} /> } />
             <Route path="/category/:category"  component={CategoryPosts} />
-            <Route path="/edit/:post" component={CreateEditPost} />
             <Route path="/create" component={CreateEditPost} />
+            <Route path="/edit/:post" component={CreateEditPost} />
             <Route path="/post/:post" component={DetailPost} />
         </div>
       </div>

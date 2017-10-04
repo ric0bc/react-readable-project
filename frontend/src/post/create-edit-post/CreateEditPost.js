@@ -35,10 +35,11 @@ class CreateEditPost extends Component {
     } else {
       BackendAPI.addPost(stringifyValues)
     }
-    this.props.history.push('/')
+    this.props.history.push(`/post/${values.id}`)
   }
 
   render() {
+    console.log(this.props);
     const {
       posts,
       match,

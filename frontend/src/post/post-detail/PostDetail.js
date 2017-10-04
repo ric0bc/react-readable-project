@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
+import { Link } from 'react-router-dom'
 
 import './post-detail.css'
 import { fetchAsyncPost } from '../action'
@@ -14,7 +15,7 @@ class PostDetail extends Component {
 
   render() {
     const { posts, comments, match } = this.props
-
+    
     return (
       <div className="posts">
         <div className="post">
@@ -27,6 +28,7 @@ class PostDetail extends Component {
             <CommentsCount
               postId={match.params.post}
               comments={comments} />
+            <Link to={`/edit/${posts.detailPost.id}`}>Edit</Link>
           </div>
           <div className="detail-post-comment">
             <Comment

@@ -7,7 +7,8 @@ import VotingComment from './voting-comment/VotingComment'
 import {
   toggleEditMode,
   fetchUpdateComment,
-  fetchAddComment
+  fetchAddComment,
+  fetchDeleteComment
 } from './actions'
 
 class Comment extends Component {
@@ -43,13 +44,19 @@ class Comment extends Component {
     this.setState({ inputBody: event.target.value })
   }
 
+  handleDelete = id => {
+    this.props.deleteComment(id)
+  }
+
   render() {
     const { comments, postId, toggleEdit } = this.props
 
     return (
       <div>
-        {comments[postId] instanceof Array && comments[postId].map(comment => (
-          <div key={comment.id}>
+        {comments[postId] instanceof Array && comments[postId]
+          .filter(comment => !comment.deleted)
+          .map(comment => (
+            <div key={comment.id}>
             {comments.editMode[comment.id] ? (
               <div>
                 <form onSubmit={this.handleSubmit}>
@@ -68,16 +75,20 @@ class Comment extends Component {
               </div>
             ) : (
               <div>
-                <span><p>{comment.body}</p></span>
+                <p>{comment.body}</p>
                 <VotingComment comment={comment} />
                 <button
                   onClick={() => toggleEdit(comment.id)}>
                     Edit
                 </button>
+                <button
+                  onClick={() => this.handleDelete(comment.id)}>
+                    Delete
+                </button>
               </div>
-            ) }
-          </div>
-        ))}
+            )}
+            </div>
+          ))}
         <form onSubmit={this.handleSubmit}>
           <input name="id" type="hidden" value={Date.now()} />
           <input name="parentId" type="hidden" value={postId} />
@@ -101,7 +112,8 @@ const mapStateToProps = state => state
 const mapDispatchToProps = dispatch => ({
   toggleEdit: (id) => dispatch(toggleEditMode(id)),
   onEditComment: (comment, id) => dispatch(fetchUpdateComment(comment, id)),
-  onAddComment: (comment) => dispatch(fetchAddComment(comment))
+  onAddComment: (comment) => dispatch(fetchAddComment(comment)),
+  deleteComment: (id) => dispatch(fetchDeleteComment(id))
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(Comment)

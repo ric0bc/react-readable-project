@@ -2,30 +2,30 @@ const authorization = 'Something'
 const url = 'http://localhost:3001/'
 
 export function fetchCategories () {
-  return fetch(`${url}categories`, {headers: {'Authorization': authorization}})
-  .then(res => res.json())
+  return fetch(`${url}categories`, {
+    headers: {
+      'Authorization': authorization
+    }
+  }).then(res => res.json())
 }
 
 export function fetchCategoryPosts (category) {
   return fetch(`${url}${category}/posts`, {
     headers: {'Authorization': authorization}
-  })
-  .then(res => res.json())
+  }).then(res => res.json())
 }
 
 export function fetchAllPosts () {
   return fetch(`${url}posts`, {
     headers: {'Authorization': authorization}
-  })
-  .then(res => res.json())
+  }).then(res => res.json())
 }
 
 export function fetchPost (postId) {
   return fetch(
     `${url}posts/${postId}`, {
       headers: { 'Authorization': authorization }
-  })
-  .then(res => res.json())
+  }).then(res => res.json())
 }
 
 export function addPost (post) {
@@ -55,8 +55,7 @@ export function editPost (post, postId) {
 export function getComments (id) {
   return fetch(`${url}posts/${id}/comments`, {
     headers: { 'Authorization': authorization }
-  })
-    .then(res => res.json())
+  }).then(res => res.json())
 }
 
 export function addComment (comment) {
@@ -104,5 +103,23 @@ export function commentVoting (id, option) {
       'Content-Type': 'application/json'
     },
     body: option
+  })
+}
+
+export function deleteComment (id) {
+  return fetch(`${url}comments/${id}`, {
+    method: 'DELETE',
+    headers: {
+      'Authorization': authorization
+    }
+  })
+}
+
+export function deletePost (id) {
+  return fetch(`${url}posts/${id}`, {
+    method: 'DELETE',
+    headers: {
+      'Authorization': authorization
+    }
   })
 }

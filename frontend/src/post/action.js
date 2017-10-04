@@ -11,6 +11,8 @@ export const CHANGE_TIMESTAMP = 'CHANGE_TIMESTAMP'
 export const CHANGE_ID = 'CHANGE_ID'
 export const RESET_DETAILPOST = 'RESET_DETAILPOST'
 export const VOTED_POST = 'VOTED_POST'
+export const SORT_POSTS = 'SORT_POSTS'
+export const DELETE_POST = 'DELETE_POST'
 
 export function getAllPosts ({ posts }) {
   return {
@@ -57,6 +59,34 @@ export function fetchVotingPost(postId, option) {
       .then(data => data.json())
       .then(post => dispatch(votePost(post)))
   )
+}
+
+function deletePost(post) {
+  return {
+    type: DELETE_POST,
+    post
+  }
+}
+
+export function fetchDeletePost(id) {
+  return dispatch => {
+    BackendAPI.deletePost(id)
+      .then(res => res.json())
+      .then(post => dispatch(deletePost(post)))
+  }
+}
+
+/***
+*
+* Sorting Posts
+*
+***/
+
+export function sorted(posts) {
+  return {
+    type: SORT_POSTS,
+    posts
+  }
 }
 
 /***

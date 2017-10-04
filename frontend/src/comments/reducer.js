@@ -3,7 +3,9 @@ import {
   TOGGLE_EDIT_MODE,
   UPDATE_COMMENT,
   ADD_COMMENT,
-  VOTE_COMMENT
+  VOTE_COMMENT,
+  DELETE_COMMENT,
+  DELETE_COMMENTS
 } from './actions'
 
 const initialCategoryState = {
@@ -61,6 +63,27 @@ function comments ( state = initialCategoryState, action ) {
       return {
         ...state,
         [action.comment.parentId]: newVotedComments
+      }
+    case DELETE_COMMENT :
+      const newComments = [...state[action.comment.parentId]]
+      newComments.map(comment => {
+        if(comment.id === action.comment.id) {
+          comment.deleted = action.comment.deleted
+        }
+        return comment
+      })
+      return {
+        ...state,
+        [action.comment.parentId]: newComments
+      }
+    case DELETE_COMMENTS :
+      const deleteComments = [...state[action.parentId]]
+      deleteComments.map(comment => {
+        comment.parentDeleted = true
+      })
+      return {
+        ...state,
+        [action.parentId]: deleteComments
       }
     default :
       return state

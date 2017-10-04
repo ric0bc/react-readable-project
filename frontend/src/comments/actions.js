@@ -6,6 +6,8 @@ export const TOGGLE_EDIT_MODE = 'TOGGLE_EDIT_MODE'
 export const UPDATE_COMMENT = 'UPDATE_COMMENT'
 export const ADD_COMMENT = 'ADD_COMMENT'
 export const VOTE_COMMENT = 'VOTE_COMMENT'
+export const DELETE_COMMENT = 'DELETE_COMMENT'
+export const DELETE_COMMENTS = 'DELETE_COMMENTS'
 
 function getComments (comments, id) {
   return {
@@ -71,6 +73,28 @@ export function fetchVotingComment (id, option) {
     BackendAPI.commentVoting(id, option)
       .then(res => res.json())
       .then(comment => dispatch(voteComment(comment)))
+  }
+}
+
+function deleteComment (comment) {
+  return {
+    type: DELETE_COMMENT,
+    comment
+  }
+}
+
+export function fetchDeleteComment (id) {
+  return dispatch => {
+    BackendAPI.deleteComment(id)
+      .then(res => res.json())
+      .then(comment => dispatch(deleteComment(comment)))
+  }
+}
+
+export function deleteComments (parentId) {
+  return {
+    type: DELETE_COMMENTS,
+    parentId
   }
 }
 

@@ -8,7 +8,9 @@ import {
   CHANGE_TIMESTAMP,
   CHANGE_ID,
   RESET_DETAILPOST,
-  VOTED_POST
+  VOTED_POST,
+  SORT_POSTS,
+  DELETE_POST
 } from './action'
 
 const initialCategoryState = {
@@ -44,6 +46,25 @@ function posts  (state = initialCategoryState, action)  {
           voteScore: action.post.voteScore
         }
       }
+    case SORT_POSTS :
+      return {
+        ...state,
+        allPosts: action.posts
+      }
+    case DELETE_POST :
+      const newPosts = [...state.allPosts]
+      newPosts.map(post => {
+        if(post.id === action.post.id){
+          post.deleted = action.post.deleted
+        }
+        return post
+      })
+      return {
+        ...state,
+        allPosts: newPosts
+      }
+
+/***********************************/
     case CHANGE_TITLE :
       return {
         ...state,
@@ -92,6 +113,7 @@ function posts  (state = initialCategoryState, action)  {
             id: action.id
           }
       }
+/***********************************/
     case RESET_DETAILPOST :
       return {
         ...state,

@@ -12,6 +12,7 @@ import category from './category-list/reducer'
 import posts from './post/reducer'
 import comments from './comments/reducer'
 import categoryPosts from './category-posts/reducer'
+import selectFieldValue from './sorting/reducer'
 
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose
 
@@ -20,7 +21,8 @@ const store = createStore(
     posts,
     category,
     comments,
-    categoryPosts
+    categoryPosts,
+    selectFieldValue
   }),
   composeEnhancers(applyMiddleware(thunk))
 )
