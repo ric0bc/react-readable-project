@@ -7,6 +7,7 @@ import { fetchAsyncPost } from '../action'
 import Comment from '../../comments/Comment'
 import CommentsCount from '../../comments/CommentsCount'
 import VotingPost from '../voting-post/VotingPost'
+import PostDeleteBtn from '../post-delete-btn/PostDeleteBtn'
 
 class PostDetail extends Component {
   componentDidMount() {
@@ -15,7 +16,7 @@ class PostDetail extends Component {
 
   render() {
     const { posts, comments, match } = this.props
-    
+
     return (
       <div className="posts">
         <div className="post">
@@ -29,6 +30,7 @@ class PostDetail extends Component {
               postId={match.params.post}
               comments={comments} />
             <Link to={`/edit/${posts.detailPost.id}`}>Edit</Link>
+            <PostDeleteBtn postId={posts.detailPost.id} data={'pushHome'} history={this.props.history}/>
           </div>
           <div className="detail-post-comment">
             <Comment

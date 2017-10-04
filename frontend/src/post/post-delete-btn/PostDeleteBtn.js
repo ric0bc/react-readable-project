@@ -9,6 +9,9 @@ class PostDeleteBtn extends Component {
   handleDelete = id => {
     this.props.delete(id)
     this.props.deleteComments(id)
+    if(this.props.data === 'pushHome'){
+      this.props.history.push('/')
+    }
   }
 
   render() {
