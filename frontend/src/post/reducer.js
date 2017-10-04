@@ -7,7 +7,8 @@ import {
   CHANGE_CATEGORY,
   CHANGE_TIMESTAMP,
   CHANGE_ID,
-  RESET_DETAILPOST
+  RESET_DETAILPOST,
+  VOTED_POST
 } from './action'
 
 const initialCategoryState = {
@@ -26,6 +27,22 @@ function posts  (state = initialCategoryState, action)  {
       return {
         ...state,
           detailPost: action.post
+      }
+    case VOTED_POST :
+      const newVotedPosts = [...state.allPosts]
+      newVotedPosts.map(post => {
+        if(post.id === action.post.id){
+          post.voteScore = action.post.voteScore
+        }
+        return post
+      })
+      return {
+        ...state,
+        allPosts: newVotedPosts,
+        detailPost: {
+          ...state.detailPost,
+          voteScore: action.post.voteScore
+        }
       }
     case CHANGE_TITLE :
       return {

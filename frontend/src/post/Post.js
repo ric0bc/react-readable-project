@@ -1,14 +1,18 @@
 import React, { Component } from 'react'
+
 import { Link } from 'react-router-dom'
 import { PropTypes } from 'prop-types'
 
 import './post.css'
 import CommentsCount from '../comments/CommentsCount'
+import VotingPost from './voting-post/VotingPost'
 
 class Post extends Component {
   static propTypes = {
     post: PropTypes.object.isRequired
   }
+
+
 
   handleTouchStart = () => {
     console.log('test');
@@ -42,12 +46,13 @@ class Post extends Component {
           </div>
         </div>
         <div className="post-details">
-          <div>Vote score: {post.voteScore}</div>
+          <VotingPost post={post} />
           <Link to={`/edit/${post.id}`}>Edit</Link>
         </div>
       </li>
     )
   }
 }
+
 
  export default Post

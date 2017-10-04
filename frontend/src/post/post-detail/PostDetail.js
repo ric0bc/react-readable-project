@@ -2,9 +2,10 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux'
 
 import './post-detail.css'
-import { fetchAsyncPost } from '../action'
+import { fetchAsyncPost, fetchVotingPost } from '../action'
 import Comment from '../../comments/Comment'
 import CommentsCount from '../../comments/CommentsCount'
+import VotingPost from '../voting-post/VotingPost'
 
 class PostDetail extends Component {
   componentDidMount() {
@@ -20,6 +21,9 @@ class PostDetail extends Component {
           <div className="detail-post-body">
             <h1 className="detail-post-title">{posts.detailPost.title}</h1>
             <p>{posts.detailPost.body}</p>
+            <div className="detail-post-voting">
+              <VotingPost post={posts.detailPost} />
+            </div>
             <CommentsCount
               postId={match.params.post}
               comments={comments} />

@@ -10,6 +10,7 @@ export const CHANGE_CATEGORY = 'CHANGE_CATEGORY'
 export const CHANGE_TIMESTAMP = 'CHANGE_TIMESTAMP'
 export const CHANGE_ID = 'CHANGE_ID'
 export const RESET_DETAILPOST = 'RESET_DETAILPOST'
+export const VOTED_POST = 'VOTED_POST'
 
 export function getAllPosts ({ posts }) {
   return {
@@ -39,6 +40,22 @@ export function fetchAsyncPost(postId) {
       .fetchPost(postId)
       .then(post => dispatch(getPost(post)))
       .then(data => dispatch(fetchAsyncComments(data.post.id)))
+  )
+}
+
+function votePost(post) {
+  return {
+    type: VOTED_POST,
+    post
+  }
+}
+
+export function fetchVotingPost(postId, option) {
+  return dispatch => (
+    BackendAPI
+      .postVoting(postId, option)
+      .then(data => data.json())
+      .then(post => dispatch(votePost(post)))
   )
 }
 
