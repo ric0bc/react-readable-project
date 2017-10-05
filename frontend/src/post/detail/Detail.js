@@ -2,14 +2,14 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { Link } from 'react-router-dom'
 
-import './post-detail.css'
+import './detail.css'
 import { fetchAsyncPost } from '../action'
 import Comment from '../../comments/Comment'
 import CommentsCount from '../../comments/CommentsCount'
 import VotingPost from '../voting-post/VotingPost'
-import PostDeleteBtn from '../post-delete-btn/PostDeleteBtn'
+import Delete from '../delete/Delete'
 
-class PostDetail extends Component {
+class Detail extends Component {
   componentDidMount() {
     this.props.fetchPost(this.props.match.params.post)
   }
@@ -30,7 +30,7 @@ class PostDetail extends Component {
               postId={match.params.post}
               comments={comments} />
             <Link to={`/edit/${posts.detailPost.id}`}>Edit</Link>
-            <PostDeleteBtn postId={posts.detailPost.id} data={'pushHome'} history={this.props.history}/>
+            <Delete postId={posts.detailPost.id} data={'pushHome'} history={this.props.history}/>
           </div>
           <div className="detail-post-comment">
             <Comment
@@ -49,4 +49,4 @@ const mapDispatchToProps = (dispatch) => ({
   fetchPost: (postId) => dispatch(fetchAsyncPost(postId))
 })
 
-export default connect(mapStateToProps, mapDispatchToProps)(PostDetail)
+export default connect(mapStateToProps, mapDispatchToProps)(Detail)

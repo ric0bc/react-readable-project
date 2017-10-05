@@ -1,8 +1,8 @@
 import React from 'react'
 import { PropTypes } from 'prop-types'
 
-import Post from './post/Post'
-import Sorting from './sorting/Sorting'
+import Post from '../../post/Post'
+import Sorting from '../../sorting/Sorting'
 
 const Home = (props) => (
   <div className="posts">

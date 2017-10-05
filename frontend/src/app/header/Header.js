@@ -2,7 +2,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 
 import './header.css'
-import CategoryList from '../category-list/CategoryList'
+import CategoryList from '../../category-list/CategoryList'
 
 const Header = (props) => (
   <div className="App-header">

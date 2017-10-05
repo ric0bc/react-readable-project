@@ -4,7 +4,7 @@ import { connect } from 'react-redux'
 import { fetchDeletePost } from '../action'
 import { deleteComments } from '../../comments/actions'
 
-class PostDeleteBtn extends Component {
+class Delete extends Component {
 
   handleDelete = id => {
     this.props.delete(id)
@@ -29,4 +29,4 @@ const mapDispatchToProps = dispatch => ({
   deleteComments: parentId => dispatch(deleteComments(parentId))
 })
 
-export default connect(mapStateToProps, mapDispatchToProps)(PostDeleteBtn)
+export default connect(mapStateToProps, mapDispatchToProps)(Delete)

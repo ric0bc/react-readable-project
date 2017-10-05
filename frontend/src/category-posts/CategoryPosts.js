@@ -8,8 +8,8 @@ import Sorting from '../sorting/Sorting'
 
 class CategoryPosts extends Component {
   static propTypes = {
-    getCategoryPosts: PropTypes.func.isRequired,
-    posts: PropTypes.array.isRequired,
+    // getCategoryPosts: PropTypes.func.isRequired,
+    posts: PropTypes.object.isRequired,
     match: PropTypes.object.isRequired
   }
 

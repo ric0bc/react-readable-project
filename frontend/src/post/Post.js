@@ -6,7 +6,7 @@ import { PropTypes } from 'prop-types'
 import './post.css'
 import CommentsCount from '../comments/CommentsCount'
 import VotingPost from './voting-post/VotingPost'
-import PostDeleteBtn from './post-delete-btn/PostDeleteBtn'
+import Delete from './delete/Delete'
 
 class Post extends Component {
   static propTypes = {
@@ -49,7 +49,7 @@ class Post extends Component {
         <div className="post-details">
           <VotingPost post={post} />
           <Link to={`/edit/${post.id}`}>Edit</Link>
-          <PostDeleteBtn postId={post.id}/>
+          <Delete postId={post.id}/>
         </div>
       </li>
     )

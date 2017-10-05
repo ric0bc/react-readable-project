@@ -2,17 +2,16 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux'
 import { Route, withRouter } from 'react-router-dom';
 import { PropTypes } from 'prop-types'
-import { sortBy } from 'sort-by'
 
 import './App.css';
 import Sidebar from './sidebar/Sidebar'
-import Home from './Home'
-import Header from './header/header'
-import CategoryPosts from './category-posts/CategoryPosts'
-import CreateEditPost from './post/create-edit-post/CreateEditPost'
-import DetailPost from './post/post-detail/PostDetail'
-import { fetchAsyncAllPosts } from './post/action'
-import { fetchAllCategories } from './category-list/actions'
+import Home from './home/Home'
+import Header from './header/Header'
+import CategoryPosts from '../category-posts/CategoryPosts'
+import CreateUpdate from '../post/create-update/CreateUpdate'
+import Detail from '../post/detail/Detail'
+import { fetchAsyncAllPosts } from '../post/action'
+import { fetchAllCategories } from '../category-list/actions'
 
 class App extends Component {
   static propTypes = {
@@ -39,10 +38,10 @@ class App extends Component {
             exact
             path="/"
             render={() => <Home posts={posts} /> } />
-            <Route path="/category/:category"  component={CategoryPosts} />
-            <Route path="/create" component={CreateEditPost} />
-            <Route path="/edit/:post" component={CreateEditPost} />
-            <Route path="/post/:post" component={DetailPost} />
+          <Route path="/category/:category"  component={CategoryPosts} />
+          <Route path="/create" component={CreateUpdate} />
+          <Route path="/edit/:post" component={CreateUpdate} />
+          <Route path="/post/:post" component={Detail} />
         </div>
       </div>
     );
@@ -61,8 +60,6 @@ const mapDispatchToProps = (dispatch) => ({
 export default withRouter(
   connect(
     mapStateToProps,
-    mapDispatchToProps,
-    null,
-    { pure: false }
+    mapDispatchToProps
   )(App)
 )
