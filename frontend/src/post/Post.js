@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
-
 import { Link } from 'react-router-dom'
 import { PropTypes } from 'prop-types'
+import Timestamp from 'react-timestamp'
 
 import './post.css'
 import CommentsCount from '../comments/CommentsCount'
@@ -30,6 +30,7 @@ class Post extends Component {
         key={post.id}
         onTouchStart={this.handleTouchStart}
         onTouchEnd={this.handleTouchEnd}>
+        <Voting postId={post.id} voteScore={post.voteScore} />
         <div className="post-content">
           <Link to={`/post/${post.id}`}>
             <p className="post-title">{post.title}</p>
@@ -41,11 +42,12 @@ class Post extends Component {
               <p>Comments:</p>
               <CommentsCount postId={post.id} comments={{}}/>
             </div>
-            <p className="post-timestamp">{post.timestamp}</p>
+            <p className="post-timestamp">
+              <Timestamp time={Math.floor(post.timestamp / 1000)} />
+            </p>
           </div>
         </div>
         <div className="post-details">
-          <Voting postId={post.id} voteScore={post.voteScore} />
           <Link to={`/edit/${post.id}`}>Edit</Link>
           <Delete postId={post.id}/>
         </div>

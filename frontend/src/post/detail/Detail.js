@@ -1,12 +1,13 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { Link } from 'react-router-dom'
+import {Card, CardActions, CardText, CardTitle} from 'material-ui/Card'
 
 import './detail.css'
 import { fetchAsyncPost } from '../action'
 import Comment from '../../comments/Comment'
 import CommentsCount from '../../comments/CommentsCount'
-import VotingPost from '../voting-post/VotingPost'
+import Voting from '../../voting/Voting'
 import Delete from '../delete/Delete'
 
 class Detail extends Component {
@@ -20,23 +21,39 @@ class Detail extends Component {
     return (
       <div className="posts">
         <div className="post">
+        <Card>
           <div className="detail-post-body">
-            <h1 className="detail-post-title">{posts.detailPost.title}</h1>
-            <p>{posts.detailPost.body}</p>
-            <div className="detail-post-voting">
-              <VotingPost post={posts.detailPost} />
+            <Voting
+              postId={posts.detailPost.id}
+              voteScore={posts.detailPost.voteScore} />
+            <div className="detail-body-main">
+              <CardTitle
+                title={posts.detailPost.title}
+                subtitle={posts.detailPost.author}
+               />
+              <CardText>{posts.detailPost.body}</CardText>
+              <div className="detail-body-details">
+                <CommentsCount
+                postId={match.params.post}
+                comments={comments} />
+                <CardActions>
+                  <Link to={`/edit/${posts.detailPost.id}`}>Edit</Link>
+                  <Delete
+                    postId={posts.detailPost.id}
+                    data={'pushHome'}
+                    history={this.props.history}
+                  />
+                </CardActions>
+
+                </div>
             </div>
-            <CommentsCount
-              postId={match.params.post}
-              comments={comments} />
-            <Link to={`/edit/${posts.detailPost.id}`}>Edit</Link>
-            <Delete postId={posts.detailPost.id} data={'pushHome'} history={this.props.history}/>
           </div>
           <div className="detail-post-comment">
             <Comment
               postId={match.params.post}
               comments={comments} />
           </div>
+          </Card>
         </div>
       </div>
     )

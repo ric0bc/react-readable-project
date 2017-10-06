@@ -1,0 +1,22 @@
+.voting {
+  width: 100px;
+  align-self: center;
+  text-align: center;
+}
+
+.btn-vote {
+  font-size: 2em;
+  cursor: pointer;
+}
+
+.vote-score {
+  margin: 0;
+}
+
+.up-vote {
+  color: #4CAF50;
+}
+
+.down-vote {
+  color: #F44336;
+}

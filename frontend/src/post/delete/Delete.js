@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
+import FlatButton from 'material-ui/FlatButton'
 
 import { fetchDeletePost } from '../action'
 import { deleteComments } from '../../comments/actions'
@@ -16,9 +17,11 @@ class Delete extends Component {
 
   render() {
     return (
-      <button onClick={() => this.handleDelete(this.props.postId)}>
-        Delete
-      </button>
+      <FlatButton
+        label="Delete"
+        secondary={true}
+        onClick={() => this.handleDelete(this.props.postId)}
+       />
     )
   }
 }

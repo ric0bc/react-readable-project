@@ -1,6 +1,16 @@
+.post {
+  max-width: 900px;
+  margin: auto;
+}
+
 .detail-post-body {
-  text-align: center;
   border-bottom: 1px solid #EEE;
+  display: flex;
+  padding-bottom: 10px;
+}
+
+.detail-body-main {
+
 }
 
 .detail-post-title {
@@ -10,4 +20,9 @@
 
 .detail-post-comment {
   padding: 0 5% 5% 5%;
+}
+
+.detail-post-author {
+  color: #757575;
+  font-style: italic;
 }

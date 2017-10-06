@@ -1,7 +1,10 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import PropTypes from 'prop-types'
+import AngleUp from 'react-icons/lib/fa/angle-up'
+import AngleDown from 'react-icons/lib/fa/angle-down'
 
+import './voting.css'
 import { fetchVotingPost } from '../post/action'
 import { fetchVotingComment } from '../comments/actions'
 
@@ -9,7 +12,7 @@ class Voting extends Component {
   static propTypes = {
     postId: PropTypes.string,
     commentId: PropTypes.string,
-    voteScore: PropTypes.number.isRequired,
+    voteScore: PropTypes.number,
     voteComment: PropTypes.func.isRequired,
     votePost: PropTypes.func.isRequired
   }
@@ -28,16 +31,14 @@ class Voting extends Component {
 
   render() {
     return (
-      <div>
-        <button
-          onClick={() => this.handleVote("upVote")}>
-            UpVote
-        </button>
-        {this.props.voteScore}
-        <button
-          onClick={() => this.handleVote("downVote")}>
-            DownVote
-        </button>
+      <div className="voting">
+        <AngleUp
+          className="btn-vote up-vote"
+          onClick={() => this.handleVote("upVote")} />
+        <p className="vote-score">{this.props.voteScore}</p>
+        <AngleDown
+          className="btn-vote down-vote"
+          onClick={() => this.handleVote("downVote")} />
       </div>
     )
   }

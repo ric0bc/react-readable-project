@@ -12,16 +12,12 @@ class Sorting extends Component {
     posts: PropTypes.object.isRequired
   }
 
-  componentDidMount() {
-    console.log(this.props.posts);
-  }
-
   handleChange = (e) => {
     const { posts, sort, changeValue } = this.props
 
     posts.allPosts.sort(sortBy('-' + e.target.value))
 
-    sort(posts.allPosts)
+    sort([...posts.allPosts])
     changeValue(e.target.value)
   }
 

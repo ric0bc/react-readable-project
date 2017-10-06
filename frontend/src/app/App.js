@@ -3,6 +3,7 @@ import { connect } from 'react-redux'
 import { Route, withRouter } from 'react-router-dom';
 import { PropTypes } from 'prop-types'
 import sortBy from 'sort-by'
+import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider'
 
 import './App.css';
 import Sidebar from './sidebar/Sidebar'
@@ -25,8 +26,8 @@ class App extends Component {
   componentDidMount() {
     const { getAllPosts, getAllCategories, posts } = this.props
 
-    getAllPosts().then(() => {
-      posts.sort(sortBy('-voteScore'))
+    getAllPosts().then((data) => {
+      data.posts.sort(sortBy('-voteScore', 'title'))
     })
     getAllCategories()
   }
@@ -35,20 +36,22 @@ class App extends Component {
     const { posts, categories } = this.props
 
     return (
-      <div className="App">
-        <Sidebar />
-        <div className="main-content">
-          <Header categories={categories} />
-          <Route
-            exact
-            path="/"
-            render={() => <Home posts={posts} /> } />
-          <Route path="/category/:category"  component={CategoryPosts} />
-          <Route path="/create" component={CreateUpdate} />
-          <Route path="/edit/:post" component={CreateUpdate} />
-          <Route path="/post/:post" component={Detail} />
+      <MuiThemeProvider>
+        <div className="App">
+          <Sidebar />
+          <div className="main-content">
+            <Header categories={categories} />
+            <Route
+              exact
+              path="/"
+              render={() => <Home posts={posts} /> } />
+            <Route path="/category/:category"  component={CategoryPosts} />
+            <Route path="/create" component={CreateUpdate} />
+            <Route path="/edit/:post" component={CreateUpdate} />
+            <Route path="/post/:post" component={Detail} />
+          </div>
         </div>
-      </div>
+      </MuiThemeProvider>
     );
   }
 }

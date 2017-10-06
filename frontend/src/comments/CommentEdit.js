@@ -22,12 +22,13 @@ class CommentEdit extends Component {
         <input name="id" type="hidden" value={this.props.commentId} />
         <input name="timestamp" type="hidden" value={Date.now()} />
         <textarea
+          className="comment-edit-body"
           name="body"
           type="text"
           value={this.state.body}
           onChange={this.handleChange} />
         <br/>
-        <input type="submit" value="Done"  />
+        <input className="control-btn done-btn" type="submit" value="Done"  />
       </form>
     )
   }
