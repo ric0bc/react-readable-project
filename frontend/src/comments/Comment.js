@@ -3,7 +3,9 @@ import { connect } from 'react-redux'
 import serializeForm from 'form-serialize'
 import { PropTypes } from 'prop-types'
 
-import VotingComment from './voting-comment/VotingComment'
+import Voting from '../voting/Voting'
+import CommentEdit from './CommentEdit'
+import CommentCreate from './CommentCreate'
 import {
   toggleEditMode,
   fetchUpdateComment,
@@ -12,13 +14,12 @@ import {
 } from './actions'
 
 class Comment extends Component {
-  state = {
-    inputBody: ''
-  }
   static propTypes = {
     postId: PropTypes.string.isRequired,
     comments: PropTypes.object.isRequired,
     onAddComment: PropTypes.func.isRequired,
+    deleteComment: PropTypes.func.isRequired,
+    toggleEdit: PropTypes.func.isRequired,
     onEditComment: PropTypes.func.isRequired
   }
 
@@ -31,78 +32,42 @@ class Comment extends Component {
       this.props.onAddComment(stringifyValues)
     } else {
       this.props.onEditComment(stringifyValues, values.id)
-      this.handleEditMode(values.id)
-      this.setState({ inputBody: '' })
+      this.props.toggleEdit(values.id)
     }
   }
 
-  handleEditMode = id => {
-    this.props.toggleEdit(id)
-  }
-
-  handleInputChange = event => {
-    this.setState({ inputBody: event.target.value })
-  }
-
-  handleDelete = id => {
-    this.props.deleteComment(id)
-  }
-
   render() {
-    const { comments, postId, toggleEdit } = this.props
+    const { comments, postId, toggleEdit, deleteComment } = this.props
+
+    let allComments = comments[postId] instanceof Array ? comments[postId]
+      .filter(comment => !comment.deleted) : []
 
     return (
       <div>
-        {comments[postId] instanceof Array && comments[postId]
-          .filter(comment => !comment.deleted)
-          .map(comment => (
+        {allComments.map(comment => (
             <div key={comment.id}>
             {comments.editMode[comment.id] ? (
-              <div>
-                <form onSubmit={this.handleSubmit}>
-                  <input name="id" type="hidden" value={comment.id} />
-                  <input name="timestamp" type="hidden" value={Date.now()} />
-                  <textarea
-                    name="body"
-                    type="text"
-                    value={ this.state.inputBody || comment.body}
-                    onChange={this.handleInputChange} />
-                  <br/>
-                  <input
-                    type="submit"
-                    value="Done"  />
-                </form>
-              </div>
+              <CommentEdit
+                body={comment.body}
+                commentId={comment.id}
+                onSubmit={this.handleSubmit} />
             ) : (
               <div>
                 <p>{comment.body}</p>
-                <VotingComment comment={comment} />
+                <Voting commentId={comment.id} voteScore={comment.voteScore} />
                 <button
                   onClick={() => toggleEdit(comment.id)}>
                     Edit
                 </button>
                 <button
-                  onClick={() => this.handleDelete(comment.id)}>
+                  onClick={() => deleteComment(comment.id)}>
                     Delete
                 </button>
               </div>
             )}
             </div>
           ))}
-        <form onSubmit={this.handleSubmit}>
-          <input name="id" type="hidden" value={Date.now()} />
-          <input name="parentId" type="hidden" value={postId} />
-          <input name="timestamp" type="hidden" value={Date.now()} />
-          <div>
-            <label>Body: </label>
-            <input name="body" type="text" />
-          </div>
-          <div>
-            <label>Author: </label>
-            <input name="author" type="text" />
-          </div>
-          <input type="submit" />
-        </form>
+          <CommentCreate onSubmit={this.handleSubmit} postId={postId} />
       </div>
     )
   }

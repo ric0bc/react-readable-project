@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux'
 import { Route, withRouter } from 'react-router-dom';
 import { PropTypes } from 'prop-types'
+import sortBy from 'sort-by'
 
 import './App.css';
 import Sidebar from './sidebar/Sidebar'
@@ -22,8 +23,12 @@ class App extends Component {
   }
 
   componentDidMount() {
-    this.props.getAllPosts()
-    this.props.getAllCategories()
+    const { getAllPosts, getAllCategories, posts } = this.props
+
+    getAllPosts().then(() => {
+      posts.sort(sortBy('-voteScore'))
+    })
+    getAllCategories()
   }
 
   render() {

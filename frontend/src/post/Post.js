@@ -5,15 +5,13 @@ import { PropTypes } from 'prop-types'
 
 import './post.css'
 import CommentsCount from '../comments/CommentsCount'
-import VotingPost from './voting-post/VotingPost'
+import Voting from '../voting/Voting'
 import Delete from './delete/Delete'
 
 class Post extends Component {
   static propTypes = {
     post: PropTypes.object.isRequired
   }
-
-
 
   handleTouchStart = () => {
     console.log('test');
@@ -47,7 +45,7 @@ class Post extends Component {
           </div>
         </div>
         <div className="post-details">
-          <VotingPost post={post} />
+          <Voting postId={post.id} voteScore={post.voteScore} />
           <Link to={`/edit/${post.id}`}>Edit</Link>
           <Delete postId={post.id}/>
         </div>

@@ -1,3 +1,4 @@
+import { replaceObjectInArray } from '../helper/Helper'
 import {
   GET_ALL_POSTS,
   GET_POST,
@@ -13,19 +14,13 @@ const initialCategoryState = {
   detailPost: {}
 }
 
-function replaceObjectInArray(array, newIndex, action) {
-  return array.map((item, index) => {
-    if(index !== newIndex){
-      return item
-    }
-    return {
-      ...item,
-      ...action.post
-    }
-  })
-}
+function posts (state = initialCategoryState, action)  {
 
-function posts  (state = initialCategoryState, action)  {
+  let index
+  if(action.post) {
+    index = [...state.allPosts].findIndex(i => i.id === action.post.id)
+  }
+
   switch (action.type) {
     case GET_ALL_POSTS :
       return {
@@ -38,29 +33,20 @@ function posts  (state = initialCategoryState, action)  {
           detailPost: action.post
       }
     case ADD_POST :
-      let postsArray = [...state.allPosts]
-      postsArray.push(action.post)
       return {
         ...state,
-        allPosts: postsArray
+        allPosts: state.allPosts.concat(action.post)
       }
     case EDIT_POST :
-      const index = [...state.allPosts].findIndex(i => i.id === action.post.id)
+    case DELETE_POST :
       return {
         ...state,
-        allPosts: replaceObjectInArray([...state.allPosts], index, action)
+        allPosts: replaceObjectInArray([...state.allPosts], index, action.post)
       }
     case VOTED_POST :
-      const newVotedPosts = [...state.allPosts]
-      newVotedPosts.map(post => {
-        if(post.id === action.post.id){
-          post.voteScore = action.post.voteScore
-        }
-        return post
-      })
       return {
         ...state,
-        allPosts: newVotedPosts,
+        allPosts: replaceObjectInArray([...state.allPosts], index, action.post),
         detailPost: {
           ...state.detailPost,
           voteScore: action.post.voteScore
@@ -70,18 +56,6 @@ function posts  (state = initialCategoryState, action)  {
       return {
         ...state,
         allPosts: action.posts
-      }
-    case DELETE_POST :
-      const newPosts = [...state.allPosts]
-      newPosts.map(post => {
-        if(post.id === action.post.id){
-          post.deleted = action.post.deleted
-        }
-        return post
-      })
-      return {
-        ...state,
-        allPosts: newPosts
       }
     default :
       return state
