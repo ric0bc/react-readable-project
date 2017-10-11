@@ -25,14 +25,15 @@ class App extends Component {
   componentDidMount() {
     const { getAllPosts, getAllCategories } = this.props
 
-    getAllPosts().then((data) => {
-      data.posts.sort(sortBy('-voteScore', 'title'))
-    })
+    getAllPosts()
     getAllCategories()
   }
 
   render() {
     const { posts, categories } = this.props
+
+    let allPosts = posts instanceof Array ? posts
+      .filter(post => !posts.deleted).sort(sortBy('-voteScore')) : []
 
     return (
       <MuiThemeProvider>
@@ -42,7 +43,7 @@ class App extends Component {
             <Route
               exact
               path="/"
-              render={() => <Home posts={posts} /> } />
+              render={() => <Home posts={allPosts} /> } />
             <Route path="/category/:category"  component={CategoryPosts} />
             <Route path="/create" component={CreateUpdate} />
             <Route path="/edit/:post" component={CreateUpdate} />
