@@ -3,6 +3,7 @@ import { connect } from 'react-redux'
 import { Link } from 'react-router-dom'
 import {Card, CardActions, CardText, CardTitle} from 'material-ui/Card'
 import FlatButton from 'material-ui/FlatButton'
+import PropTypes from 'prop-types'
 
 import './detail.css'
 import { fetchAsyncPost } from '../action'
@@ -12,37 +13,43 @@ import Voting from '../../voting/Voting'
 import Delete from '../delete/Delete'
 
 class Detail extends Component {
+  static propTypes = {
+    fetchPost: PropTypes.func.isRequired,
+    match: PropTypes.object.isRequired,
+    detailPost: PropTypes.object.isRequired
+  }
+
   componentDidMount() {
     this.props.fetchPost(this.props.match.params.post)
   }
 
   render() {
-    const { posts, comments, match } = this.props
-
+    const { detailPost, comments, match } = this.props
+    
     return (
       <div className="posts">
         <div className="post">
         <Card>
           <div className="detail-post-body">
             <Voting
-              postId={posts.detailPost.id}
-              voteScore={posts.detailPost.voteScore} />
+              postId={detailPost.id}
+              voteScore={detailPost.voteScore} />
             <div className="detail-body-main">
               <CardTitle
-                title={posts.detailPost.title}
-                subtitle={posts.detailPost.author}
+                title={detailPost.title}
+                subtitle={detailPost.author}
                />
-              <CardText>{posts.detailPost.body}</CardText>
+              <CardText>{detailPost.body}</CardText>
               <div className="detail-body-details">
                 <CommentsCount
                 postId={match.params.post}
                 comments={comments} />
                 <CardActions>
-                  <Link to={`/edit/${posts.detailPost.id}`}>
+                  <Link to={`/edit/${detailPost.id}`}>
                     <FlatButton label="Edit" secondary={true} />
                   </Link>
                   <Delete
-                    postId={posts.detailPost.id}
+                    postId={detailPost.id}
                     data={'pushHome'}
                     history={this.props.history}
                   />
@@ -63,7 +70,10 @@ class Detail extends Component {
   }
 }
 
-const mapStateToProps = state => state
+const mapStateToProps = state => ({
+  comments: state.comments,
+  detailPost: state.posts.detailPost
+})
 
 const mapDispatchToProps = (dispatch) => ({
   fetchPost: (postId) => dispatch(fetchAsyncPost(postId))

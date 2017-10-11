@@ -26,10 +26,9 @@ class Delete extends Component {
   }
 }
 
-const mapStateToProps = state => state
 const mapDispatchToProps = dispatch => ({
   delete: id => dispatch(fetchDeletePost(id)),
   deleteComments: parentId => dispatch(deleteComments(parentId))
 })
 
-export default connect(mapStateToProps, mapDispatchToProps)(Delete)
+export default connect(null, mapDispatchToProps)(Delete)

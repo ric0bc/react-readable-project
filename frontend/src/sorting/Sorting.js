@@ -27,7 +27,7 @@ class Sorting extends Component {
       <div className="sorting">
         <label htmlFor="sorting">Sort by: </label>
         <select
-          value={this.props.selectFieldValue.value}
+          value={this.props.value}
           id="sorting"
           onChange={this.handleChange} >
           <option value="voteScore">Vote score</option>
@@ -38,7 +38,10 @@ class Sorting extends Component {
   }
 }
 
-const mapStateToProps = state => state
+const mapStateToProps = state => ({
+  posts: state.posts,
+  value: state.selectFieldValue.value
+})
 const mapDispatchToProps = dispatch => ({
   sort: (posts) => dispatch(sorted(posts)),
   changeValue: (value) => dispatch(changeSelectValue(value))

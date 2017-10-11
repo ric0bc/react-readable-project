@@ -45,7 +45,6 @@ class Comment extends Component {
 
     let allComments = comments[postId] instanceof Array ? comments[postId]
       .filter(comment => !comment.deleted).sort(sortBy('-voteScore')) : []
-
     return (
       <div>
         <h2>Comments</h2>
@@ -91,7 +90,6 @@ class Comment extends Component {
   }
 }
 
-const mapStateToProps = state => state
 const mapDispatchToProps = dispatch => ({
   toggleEdit: (id) => dispatch(toggleEditMode(id)),
   onEditComment: (comment, id) => dispatch(fetchUpdateComment(comment, id)),
@@ -99,4 +97,4 @@ const mapDispatchToProps = dispatch => ({
   deleteComment: (id) => dispatch(fetchDeleteComment(id))
 })
 
-export default connect(mapStateToProps, mapDispatchToProps)(Comment)
+export default connect(null, mapDispatchToProps)(Comment)

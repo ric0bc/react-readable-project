@@ -44,10 +44,9 @@ class Voting extends Component {
   }
 }
 
-const mapStateToProps = state => state
 const mapDispatchToProps = dispatch => ({
   votePost: (id, option) => dispatch(fetchVotingPost(id, option)),
   voteComment: (id, option) => dispatch(fetchVotingComment(id, option))
 })
 
-export default connect(mapStateToProps, mapDispatchToProps)(Voting)
+export default connect(null, mapDispatchToProps)(Voting)
