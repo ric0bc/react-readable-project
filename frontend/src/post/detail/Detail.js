@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom'
 import {Card, CardActions, CardText, CardTitle} from 'material-ui/Card'
 import FlatButton from 'material-ui/FlatButton'
 import PropTypes from 'prop-types'
+import Timestamp from 'react-timestamp'
 
 import './detail.css'
 import { fetchAsyncPost } from '../action'
@@ -46,6 +47,7 @@ class Detail extends Component {
                     postId={match.params.post}
                     comments={comments}
                   />
+                  <Timestamp time={Math.floor(detailPost.timestamp / 1000)} />
                 </div>
                 <CardActions>
                   <Link to={`/edit/${detailPost.id}`}>
