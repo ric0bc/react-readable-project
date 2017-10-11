@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import serializeForm from 'form-serialize'
 import { connect } from 'react-redux'
+import PropTypes from 'prop-types'
 import TextField from 'material-ui/TextField'
 import RaisedButton from 'material-ui/RaisedButton'
 import { Card, CardActions } from 'material-ui/Card'
@@ -11,10 +12,11 @@ import {
   fetchEditPost,
   fetchAddPost
 } from '../action'
+import { uniqueId } from '../../helper/Helper'
 
 class CreateUpdate extends Component {
   state = {
-    id: Date.now(),
+    id: uniqueId(),
     timestamp: Date.now(),
     title: '',
     body: '',
@@ -23,16 +25,24 @@ class CreateUpdate extends Component {
     disabled: false
   }
 
+  static propTypes = {
+    fetchPost: PropTypes.func.isRequired,
+    editPost: PropTypes.func.isRequired,
+    addPost: PropTypes.func.isRequired,
+    match: PropTypes.object.isRequired,
+    post: PropTypes.object.isRequired
+  }
+
   componentDidMount() {
     const { match, fetchPost} = this.props
     if(match.params.post){
       fetchPost(match.params.post)
         .then(() => this.setState({
-          id:         this.props.posts.detailPost.id,
-          title:      this.props.posts.detailPost.title,
-          body:       this.props.posts.detailPost.body,
-          author:     this.props.posts.detailPost.author,
-          category:   this.props.posts.detailPost.category,
+          id:         this.props.post.id,
+          title:      this.props.post.title,
+          body:       this.props.post.body,
+          author:     this.props.post.author,
+          category:   this.props.post.category,
           disabled:   true
         })
       )
@@ -52,7 +62,12 @@ class CreateUpdate extends Component {
     } else {
       addPost(stringifiedValues)
     }
-    history.push(`/post/${values.id}`)
+
+    if(this.state.category){
+      history.push(`/${this.state.category}/${values.id}`)
+    } else {
+      history.push('/')
+    }
   }
 
   handleChange = (e) => {
@@ -116,12 +131,12 @@ class CreateUpdate extends Component {
               <option value="udacity">Udacity</option>
             </select>
              <CardActions>
-               <RaisedButton
-                 type="submit"
-                 label="Submit"
-                 secondary={true}
-                 style={styles.submitStyle}
-                />
+              <RaisedButton
+                type="submit"
+                label="Submit"
+                secondary={true}
+                style={styles.submitStyle}
+              />
              </CardActions>
           </form>
           </Card>
@@ -137,7 +152,7 @@ const styles = {
   }
 }
 
-const mapStateToProps = state => state
+const mapStateToProps = state => ({ post: state.posts.detailPost })
 
 const mapDispatchToProps = (dispatch) => ({
   fetchPost: postId => dispatch(fetchAsyncPost(postId)),

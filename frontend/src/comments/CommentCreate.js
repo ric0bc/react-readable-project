@@ -4,6 +4,8 @@ import { Card, CardActions, CardHeader } from 'material-ui/Card'
 import TextField from 'material-ui/TextField'
 import FlatButton from 'material-ui/FlatButton'
 
+import { uniqueId } from '../helper/Helper'
+
 class CommentCreate extends Component {
   state = {
     body: '',
@@ -32,7 +34,7 @@ class CommentCreate extends Component {
       <Card>
         <CardHeader title="Add a comment" />
         <form onSubmit={this.handleSubmit}>
-          <input name="id" type="hidden" value={Date.now()} />
+          <input name="id" type="hidden" value={uniqueId()} />
           <input name="parentId" type="hidden" value={this.props.postId} />
           <input name="timestamp" type="hidden" value={Date.now()} />
           <div className="create-textfield">

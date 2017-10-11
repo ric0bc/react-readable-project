@@ -6,3 +6,7 @@ export function replaceObjectInArray(array, newIndex, object) {
     return {...item, ...object}
   })
 }
+
+export function uniqueId () {
+  return Math.random().toString(36).substr(2, 15)
+}

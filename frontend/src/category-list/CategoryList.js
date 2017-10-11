@@ -15,7 +15,7 @@ const CategoryList = (props) => (
         </li>
       </Link>
       {props.categories.map(category => (
-        <Link key={category.id} to={`/category/${category.path}`}>
+        <Link key={category.id} to={`/${category.path}`}>
           <li className="category-item">
             <RaisedButton label={category.name} secondary={true} />
           </li>

@@ -37,20 +37,17 @@ function posts (state = initialCategoryState, action)  {
         ...state,
         allPosts: state.allPosts.concat(action.post)
       }
-    case EDIT_POST :
     case DELETE_POST :
       return {
         ...state,
         allPosts: replaceObjectInArray([...state.allPosts], index, action.post)
       }
+    case EDIT_POST :
     case VOTED_POST :
       return {
         ...state,
         allPosts: replaceObjectInArray([...state.allPosts], index, action.post),
-        detailPost: {
-          ...state.detailPost,
-          voteScore: action.post.voteScore
-        }
+        detailPost: action.post
       }
     case SORT_POSTS :
       return {

@@ -9,7 +9,7 @@ import Sorting from '../sorting/Sorting'
 class CategoryPosts extends Component {
   static propTypes = {
     // getCategoryPosts: PropTypes.func.isRequired,
-    posts: PropTypes.object.isRequired,
+    posts: PropTypes.array.isRequired,
     match: PropTypes.object.isRequired
   }
 
@@ -31,8 +31,8 @@ class CategoryPosts extends Component {
   render() {
     const { posts, match } = this.props
     let categoryPosts = [];
-    if(posts.posts.allPosts){
-      categoryPosts = posts.posts.allPosts.filter( post => post.category === match.params.category)
+    if(posts){
+      categoryPosts = posts.filter( post => post.category === match.params.category && !post.deleted)
     }
 
     return (
@@ -40,10 +40,7 @@ class CategoryPosts extends Component {
         <Sorting posts={categoryPosts} />
         <ol className="post-items">
           {categoryPosts.map( post => (
-            <Post
-              key={post.id}
-              category={ match.params.category }
-              post={post} />
+            <Post key={post.id} post={post} />
           ))}
         </ol>
       </div>
@@ -51,7 +48,7 @@ class CategoryPosts extends Component {
   }
 }
 
-const mapStateToProps = state => ({ posts: state })
+const mapStateToProps = state => ({ posts: state.posts.allPosts })
 // const mapDispatchToProps = dispatch => ({
 //   getCategoryPosts: category => dispatch(fetchAsyncCategoryPosts(category))
 // })

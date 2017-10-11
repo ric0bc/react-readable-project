@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux'
-import { Route, withRouter } from 'react-router-dom';
+import { Route, withRouter, Switch } from 'react-router-dom';
 import { PropTypes } from 'prop-types'
 import sortBy from 'sort-by'
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider'
@@ -19,7 +19,8 @@ class App extends Component {
     posts: PropTypes.array.isRequired,
     getAllPosts: PropTypes.func.isRequired,
     categories: PropTypes.array.isRequired,
-    getAllCategories: PropTypes.func.isRequired
+    getAllCategories: PropTypes.func.isRequired,
+    sortingValue: PropTypes.string
   }
 
   componentDidMount() {
@@ -30,24 +31,27 @@ class App extends Component {
   }
 
   render() {
-    const { posts, categories } = this.props
+    const { posts, categories, sortingValue } = this.props
 
     let allPosts = posts instanceof Array ? posts
-      .filter(post => !posts.deleted).sort(sortBy('-voteScore')) : []
+      .filter(post => !posts.deleted).sort(sortBy('-' + sortingValue)) : []
 
     return (
       <MuiThemeProvider>
         <div className="App">
           <div className="main-content">
             <Header categories={categories} />
-            <Route
-              exact
-              path="/"
-              render={() => <Home posts={allPosts} /> } />
-            <Route path="/category/:category"  component={CategoryPosts} />
-            <Route path="/create" component={CreateUpdate} />
-            <Route path="/edit/:post" component={CreateUpdate} />
-            <Route path="/post/:post" component={Detail} />
+            <Switch>
+              <Route
+                exact
+                path="/"
+                render={() => <Home posts={allPosts} /> }
+              />
+              <Route path="/create" component={CreateUpdate} />
+              <Route exact path="/:category"  component={CategoryPosts} />
+              <Route path="/edit/:post" component={CreateUpdate} />
+              <Route path="/:category/:post" component={Detail} />
+            </Switch>
           </div>
         </div>
       </MuiThemeProvider>
@@ -57,7 +61,8 @@ class App extends Component {
 
 const mapStateToProps = state => ({
   posts: state.posts.allPosts,
-  categories: state.category.categories
+  categories: state.category.categories,
+  sortingValue: state.selectFieldValue.value
 })
 const mapDispatchToProps = (dispatch) => ({
   getAllPosts: () => dispatch(fetchAsyncAllPosts()),
