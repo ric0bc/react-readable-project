@@ -1,8 +1,8 @@
 # Readable project
 
-This is my final project for Udacity's Redux course. 
+This is my final project for Udacity's Redux course.
 
-## Start the app
+## Start
 
 To get started:
 
