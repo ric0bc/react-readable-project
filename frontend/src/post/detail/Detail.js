@@ -25,7 +25,7 @@ class Detail extends Component {
 
   render() {
     const { detailPost, comments, match } = this.props
-    
+
     return (
       <div className="posts">
         <div className="post">
@@ -41,9 +41,12 @@ class Detail extends Component {
                />
               <CardText>{detailPost.body}</CardText>
               <div className="detail-body-details">
-                <CommentsCount
-                postId={match.params.post}
-                comments={comments} />
+                <div className="comments-count">
+                  <CommentsCount
+                    postId={match.params.post}
+                    comments={comments}
+                  />
+                </div>
                 <CardActions>
                   <Link to={`/edit/${detailPost.id}`}>
                     <FlatButton label="Edit" secondary={true} />

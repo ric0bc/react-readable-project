@@ -26,3 +26,9 @@
   color: #757575;
   font-style: italic;
 }
+
+.comments-count {
+  padding: 16px;
+  font-size: 14px;
+  color: rgba(0, 0, 0, 0.54);
+}

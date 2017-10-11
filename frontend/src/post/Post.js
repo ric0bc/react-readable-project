@@ -20,7 +20,6 @@ const Post = (props) =>  (
       <div className="post-sub-details">
         <p className="post-author">Author: {props.post.author}</p>
         <div className="post-comments">
-          <p>Comments:</p>
           <CommentsCount postId={props.post.id} comments={{}}/>
         </div>
         <p className="post-timestamp">

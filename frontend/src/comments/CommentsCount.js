@@ -22,6 +22,7 @@ class CommentsCount extends Component {
     const { state, postId } = this.props
     return (
       <div>
+        Comments:
         {state.comments[postId] instanceof Array && state.comments[postId].length}
       </div>
     )
