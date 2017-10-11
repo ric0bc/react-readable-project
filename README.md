@@ -19,4 +19,6 @@ To get started:
     - `npm install`
     - `npm start`
 
+## Screenshot from me (some wired posts)
+
 ![](readable-app.png)
