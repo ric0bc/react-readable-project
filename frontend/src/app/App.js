@@ -6,7 +6,6 @@ import sortBy from 'sort-by'
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider'
 
 import './App.css';
-import Sidebar from './sidebar/Sidebar'
 import Home from './home/Home'
 import Header from './header/Header'
 import CategoryPosts from '../category-posts/CategoryPosts'
@@ -24,7 +23,7 @@ class App extends Component {
   }
 
   componentDidMount() {
-    const { getAllPosts, getAllCategories, posts } = this.props
+    const { getAllPosts, getAllCategories } = this.props
 
     getAllPosts().then((data) => {
       data.posts.sort(sortBy('-voteScore', 'title'))
@@ -38,7 +37,6 @@ class App extends Component {
     return (
       <MuiThemeProvider>
         <div className="App">
-          <Sidebar />
           <div className="main-content">
             <Header categories={categories} />
             <Route

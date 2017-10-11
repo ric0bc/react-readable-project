@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { Link } from 'react-router-dom'
 import {Card, CardActions, CardText, CardTitle} from 'material-ui/Card'
+import FlatButton from 'material-ui/FlatButton'
 
 import './detail.css'
 import { fetchAsyncPost } from '../action'
@@ -37,7 +38,9 @@ class Detail extends Component {
                 postId={match.params.post}
                 comments={comments} />
                 <CardActions>
-                  <Link to={`/edit/${posts.detailPost.id}`}>Edit</Link>
+                  <Link to={`/edit/${posts.detailPost.id}`}>
+                    <FlatButton label="Edit" secondary={true} />
+                  </Link>
                   <Delete
                     postId={posts.detailPost.id}
                     data={'pushHome'}

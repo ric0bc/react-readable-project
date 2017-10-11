@@ -1,10 +1,16 @@
 .create-post-wrapper {
   min-height: 100vh;
+  max-width: 900px;
+  margin: auto;
 }
 
 .create-form {
-  max-width: 900px;
+  max-width: 700px;
   width: 100%;
   height: 100%;
   margin: auto;
+}
+
+.select-category {
+  margin-top:10px;
 }

@@ -26,16 +26,6 @@
   color: inherit;
 }
 
-.btn {
-  background-color: #E91E63;
-  border-radius: 36px;
-  padding: 5px 36px;
-  text-transform: uppercase;
-  color: #FFF;
-  font-size: 0.8em;
-  margin-right: 10px;
-}
-
 .control-btn {
   background-color: transparent;
   text-transform: uppercase;

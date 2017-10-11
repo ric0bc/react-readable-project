@@ -3,6 +3,7 @@ import { connect } from 'react-redux'
 import sortBy from 'sort-by'
 import { PropTypes } from 'prop-types'
 
+import './sorting.css'
 import { sorted } from '../post/action'
 import { changeSelectValue } from './action'
 
@@ -23,13 +24,13 @@ class Sorting extends Component {
 
   render() {
     return (
-      <div>
+      <div className="sorting">
         <label htmlFor="sorting">Sort by: </label>
         <select
           value={this.props.selectFieldValue.value}
           id="sorting"
-          onChange={this.handleChange}>
-          <option value="voteScore">Voting score</option>
+          onChange={this.handleChange} >
+          <option value="voteScore">Vote score</option>
           <option value="timestamp">Date</option>
         </select>
       </div>

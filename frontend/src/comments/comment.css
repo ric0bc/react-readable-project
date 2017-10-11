@@ -13,7 +13,9 @@
   margin: 10px 0;
 }
 
-
+.create-textfield {
+  padding: 0 40px;
+}
 
 .comment-control-btns {
   position: absolute;
