@@ -8,31 +8,27 @@ class CommentsCount extends Component {
   static propTypes = {
     postId: PropTypes.string,
     comments: PropTypes.object,
-    fetchComments: PropTypes.func.isRequired
+    fetchAsyncComments: PropTypes.func.isRequired
   }
 
   componentDidMount() {
-    const { fetchComments, postId, comments } = this.props
+    const { fetchAsyncComments, postId, comments } = this.props
     if(Object.keys(comments).length <= 0) {
-      fetchComments(postId)
+      fetchAsyncComments(postId)
     }
   }
 
   render() {
-    const { state, postId } = this.props
+    const { reduxComments, postId } = this.props
     return (
       <div>
         Comments:
-        {state.comments[postId] instanceof Array && state.comments[postId].length}
+        {reduxComments[postId] instanceof Array && reduxComments[postId].length}
       </div>
     )
   }
 }
 
-const mapStateToProps = state => ({ state })
+const mapStateToProps = ({ comments }) => ({ reduxComments: comments })
 
-const mapDispatchToProps = (disptach) => ({
-  fetchComments: id => disptach(fetchAsyncComments(id))
-})
-
-export default connect(mapStateToProps, mapDispatchToProps)(CommentsCount)
+export default connect(mapStateToProps, {fetchAsyncComments})(CommentsCount)

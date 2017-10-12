@@ -14,3 +14,7 @@
 .select-category {
   margin-top:10px;
 }
+
+.select-category.error {
+  border: 2px solid red;
+}

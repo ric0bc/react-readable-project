@@ -7,11 +7,7 @@ import RaisedButton from 'material-ui/RaisedButton'
 import { Card, CardActions } from 'material-ui/Card'
 
 import './createUpdate.css'
-import {
-  fetchAsyncPost,
-  fetchEditPost,
-  fetchAddPost
-} from '../action'
+import * as actions from '../action'
 import { uniqueId } from '../../helper/Helper'
 
 class CreateUpdate extends Component {
@@ -22,21 +18,22 @@ class CreateUpdate extends Component {
     body: '',
     author: '',
     category: '',
-    disabled: false
+    disabled: false,
+    error: false,
   }
 
   static propTypes = {
-    fetchPost: PropTypes.func.isRequired,
-    editPost: PropTypes.func.isRequired,
-    addPost: PropTypes.func.isRequired,
+    fetchAsyncPost: PropTypes.func.isRequired,
+    fetchEditPost: PropTypes.func.isRequired,
+    fetchAddPost: PropTypes.func.isRequired,
     match: PropTypes.object.isRequired,
     post: PropTypes.object.isRequired
   }
 
   componentDidMount() {
-    const { match, fetchPost} = this.props
+    const { match, fetchAsyncPost } = this.props
     if(match.params.post){
-      fetchPost(match.params.post)
+      fetchAsyncPost(match.params.post)
         .then(() => this.setState({
           id:         this.props.post.id,
           title:      this.props.post.title,
@@ -50,17 +47,24 @@ class CreateUpdate extends Component {
   }
 
   handleSubmit = (event) => {
-    const { match, editPost, addPost, history } = this.props
+    const { match, fetchEditPost, fetchAddPost, history } = this.props
 
     event.preventDefault()
+
+    if(this.state.category === ''){
+      this.setState({error: true})
+      return false
+    } else {
+      this.setState({error: false})
+    }
 
     const values = serializeForm(event.target, { hash: true })
     const stringifiedValues = JSON.stringify(values)
 
     if(match.params.post){
-      editPost(stringifiedValues, values.id)
+      fetchEditPost(stringifiedValues, values.id)
     } else {
-      addPost(stringifiedValues)
+      fetchAddPost(stringifiedValues)
     }
 
     if(this.state.category){
@@ -120,12 +124,13 @@ class CreateUpdate extends Component {
             />
             <label>Category: </label>
             <select
-              className="select-category"
+              className={`select-category ${this.state.error ? 'error' : ''}`}
               name="category"
               value={this.state.category}
               onChange={this.handleChange}
               disabled={this.state.disabled}
             >
+              <option value=""></option>
               <option value="react">React</option>
               <option value="redux">Redux</option>
               <option value="udacity">Udacity</option>
@@ -152,12 +157,6 @@ const styles = {
   }
 }
 
-const mapStateToProps = state => ({ post: state.posts.detailPost })
+const mapStateToProps = ({ posts }) => ({ post: posts.detailPost })
 
-const mapDispatchToProps = (dispatch) => ({
-  fetchPost: postId => dispatch(fetchAsyncPost(postId)),
-  editPost: (values, id) => dispatch(fetchEditPost(values, id)),
-  addPost: values => dispatch(fetchAddPost(values))
-})
-
-export default connect(mapStateToProps, mapDispatchToProps)(CreateUpdate)
+export default connect(mapStateToProps, actions)(CreateUpdate)

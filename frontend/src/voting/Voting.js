@@ -13,19 +13,19 @@ class Voting extends Component {
     postId: PropTypes.string,
     commentId: PropTypes.string,
     voteScore: PropTypes.number,
-    voteComment: PropTypes.func.isRequired,
-    votePost: PropTypes.func.isRequired
+    fetchVotingComment: PropTypes.func.isRequired,
+    fetchVotingPost: PropTypes.func.isRequired
   }
 
   handleVote = voting => {
-    const { votePost, voteComment , postId, commentId } = this.props
+    const { fetchVotingPost, fetchVotingComment , postId, commentId } = this.props
 
     const option = { option: voting }
 
     if(postId) {
-      votePost(postId, JSON.stringify(option))
+      fetchVotingPost(postId, JSON.stringify(option))
     } else {
-      voteComment(commentId, JSON.stringify(option))
+      fetchVotingComment(commentId, JSON.stringify(option))
     }
   }
 
@@ -44,9 +44,4 @@ class Voting extends Component {
   }
 }
 
-const mapDispatchToProps = dispatch => ({
-  votePost: (id, option) => dispatch(fetchVotingPost(id, option)),
-  voteComment: (id, option) => dispatch(fetchVotingComment(id, option))
-})
-
-export default connect(null, mapDispatchToProps)(Voting)
+export default connect(null, {fetchVotingPost, fetchVotingComment})(Voting)

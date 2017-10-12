@@ -8,7 +8,7 @@ import { deleteComments } from '../../comments/actions'
 class Delete extends Component {
 
   handleDelete = id => {
-    this.props.delete(id)
+    this.props.fetchDeletePost(id)
     this.props.deleteComments(id)
     if(this.props.data === 'pushHome'){
       this.props.history.push('/')
@@ -26,9 +26,4 @@ class Delete extends Component {
   }
 }
 
-const mapDispatchToProps = dispatch => ({
-  delete: id => dispatch(fetchDeletePost(id)),
-  deleteComments: parentId => dispatch(deleteComments(parentId))
-})
-
-export default connect(null, mapDispatchToProps)(Delete)
+export default connect(null, {fetchDeletePost, deleteComments})(Delete)

@@ -17,17 +17,16 @@ import { fetchAllCategories } from '../category-list/actions'
 class App extends Component {
   static propTypes = {
     posts: PropTypes.array.isRequired,
-    getAllPosts: PropTypes.func.isRequired,
+    fetchAsyncAllPosts: PropTypes.func.isRequired,
+    fetchAllCategories: PropTypes.func.isRequired,
     categories: PropTypes.array.isRequired,
-    getAllCategories: PropTypes.func.isRequired,
     sortingValue: PropTypes.string
   }
 
   componentDidMount() {
-    const { getAllPosts, getAllCategories } = this.props
-
-    getAllPosts()
-    getAllCategories()
+    const { fetchAsyncAllPosts, fetchAllCategories } = this.props
+    fetchAsyncAllPosts()
+    fetchAllCategories()
   }
 
   render() {
@@ -59,19 +58,15 @@ class App extends Component {
   }
 }
 
-const mapStateToProps = state => ({
-  posts: state.posts.allPosts,
-  categories: state.category.categories,
-  sortingValue: state.selectFieldValue.value
-})
-const mapDispatchToProps = (dispatch) => ({
-  getAllPosts: () => dispatch(fetchAsyncAllPosts()),
-  getAllCategories: () => dispatch(fetchAllCategories())
+const mapStateToProps = ({ posts, category, selectFieldValue }) => ({
+  posts: posts.allPosts,
+  categories: category.categories,
+  sortingValue: selectFieldValue.value
 })
 
 export default withRouter(
   connect(
     mapStateToProps,
-    mapDispatchToProps
+    {fetchAsyncAllPosts, fetchAllCategories}
   )(App)
 )

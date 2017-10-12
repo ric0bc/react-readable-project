@@ -10,21 +10,16 @@ import './comment.css'
 import Voting from '../voting/Voting'
 import CommentEdit from './CommentEdit'
 import CommentCreate from './CommentCreate'
-import {
-  toggleEditMode,
-  fetchUpdateComment,
-  fetchAddComment,
-  fetchDeleteComment
-} from './actions'
+import * as actions from './actions'
 
 class Comment extends Component {
   static propTypes = {
     postId: PropTypes.string.isRequired,
     comments: PropTypes.object.isRequired,
-    onAddComment: PropTypes.func.isRequired,
-    deleteComment: PropTypes.func.isRequired,
-    toggleEdit: PropTypes.func.isRequired,
-    onEditComment: PropTypes.func.isRequired
+    fetchAddComment: PropTypes.func.isRequired,
+    fetchDeleteComment: PropTypes.func.isRequired,
+    toggleEditMode: PropTypes.func.isRequired,
+    fetchUpdateComment: PropTypes.func.isRequired
   }
 
   handleSubmit = (event) => {
@@ -33,15 +28,15 @@ class Comment extends Component {
     const stringifyValues = JSON.stringify(values)
 
     if(values.parentId) {
-      this.props.onAddComment(stringifyValues)
+      this.props.fetchAddComment(stringifyValues)
     } else {
-      this.props.onEditComment(stringifyValues, values.id)
-      this.props.toggleEdit(values.id)
+      this.props.fetchUpdateComment(stringifyValues, values.id)
+      this.props.toggleEditMode(values.id)
     }
   }
 
   render() {
-    const { comments, postId, toggleEdit, deleteComment } = this.props
+    const { comments, postId, toggleEditMode, fetchDeleteComment } = this.props
 
     let allComments = comments[postId] instanceof Array ? comments[postId]
       .filter(comment => !comment.deleted).sort(sortBy('-voteScore')) : []
@@ -70,12 +65,12 @@ class Comment extends Component {
                             <FlatButton
                               label="Edit"
                               secondary={true}
-                              onClick={() => toggleEdit(comment.id)}
+                              onClick={() => toggleEditMode(comment.id)}
                             />
                             <FlatButton
                               label="Delete"
                               secondary={true}
-                              onClick={() => deleteComment(comment.id)}
+                              onClick={() => fetchDeleteComment(comment.id)}
                             />
                           </CardActions>
                         </div>
@@ -90,11 +85,4 @@ class Comment extends Component {
   }
 }
 
-const mapDispatchToProps = dispatch => ({
-  toggleEdit: (id) => dispatch(toggleEditMode(id)),
-  onEditComment: (comment, id) => dispatch(fetchUpdateComment(comment, id)),
-  onAddComment: (comment) => dispatch(fetchAddComment(comment)),
-  deleteComment: (id) => dispatch(fetchDeleteComment(id))
-})
-
-export default connect(null, mapDispatchToProps)(Comment)
+export default connect(null, actions)(Comment)

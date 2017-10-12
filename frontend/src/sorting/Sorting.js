@@ -9,17 +9,18 @@ import { changeSelectValue } from './action'
 
 class Sorting extends Component {
   static propTypes = {
-    changeValue: PropTypes.func.isRequired,
+    changeSelectValue: PropTypes.func.isRequired,
+    sorted: PropTypes.func.isRequired,
     posts: PropTypes.object.isRequired
   }
 
   handleChange = (e) => {
-    const { posts, sort, changeValue } = this.props
+    const { posts, sorted, changeSelectValue } = this.props
 
     posts.allPosts.sort(sortBy('-' + e.target.value))
 
-    sort([...posts.allPosts])
-    changeValue(e.target.value)
+    sorted([...posts.allPosts])
+    changeSelectValue(e.target.value)
   }
 
   render() {
@@ -38,13 +39,9 @@ class Sorting extends Component {
   }
 }
 
-const mapStateToProps = state => ({
-  posts: state.posts,
-  value: state.selectFieldValue.value
-})
-const mapDispatchToProps = dispatch => ({
-  sort: (posts) => dispatch(sorted(posts)),
-  changeValue: (value) => dispatch(changeSelectValue(value))
+const mapStateToProps = ({ posts, selectFieldValue }) => ({
+  posts,
+  value: selectFieldValue.value
 })
 
-export default connect(mapStateToProps, mapDispatchToProps)(Sorting)
+export default connect(mapStateToProps, {sorted, changeSelectValue})(Sorting)
